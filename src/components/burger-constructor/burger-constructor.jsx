@@ -3,6 +3,7 @@ import MenuItem from '../menuItem/menuItem'
 import { data } from '../../utils/data'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { constructorPropType } from '../../utils/prop-types'
 
 function BurgerConstructor() {
   return (
@@ -15,7 +16,11 @@ function BurgerConstructor() {
           type='top'
           isLocked={true}
         />
-        <div className={`${'custom-scroll'} ${styles.burgerConstructor__positions}`}>
+        <div
+          className={`${'custom-scroll'} ${
+            styles.burgerConstructor__positions
+          }`}
+        >
           <MenuItem
             text={data[1].name}
             thumbnail={data[1].image}
@@ -64,7 +69,10 @@ function BurgerConstructor() {
           >
             610
           </p>
-          <CurrencyIcon className={styles.burgerConstructor__priceIcon} type='primary' />
+          <CurrencyIcon
+            className={styles.burgerConstructor__priceIcon}
+            type='primary'
+          />
         </div>
         <Button htmlType='button' type='primary' size='medium'>
           Оформить заказ
@@ -74,4 +82,11 @@ function BurgerConstructor() {
   )
 }
 
-export default BurgerConstructor;
+export default BurgerConstructor
+
+BurgerConstructor.propTypes = {
+  text: constructorPropType,
+  price: constructorPropType,
+  type: constructorPropType,
+  isLocked: constructorPropType,
+}

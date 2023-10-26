@@ -3,13 +3,7 @@ import FillMenu from '../fill-menu/fill-menu'
 import BurgerCard from '../burger-card/burger-card'
 import Title from '../title/title'
 import { data } from '../../utils/data'
-
-import bread1 from '../../images/bread1.png'
-import bread2 from '../../images/bread2.png'
-import sauce1 from '../../images/sauce1.png'
-import sauce2 from '../../images/sauce2.png'
-import sauce3 from '../../images/sauce3.png'
-import sauce4 from '../../images/sauce4.png'
+import { ingredientPropType } from '../../utils/prop-types'
 
 function BurgerIngredients() {
   return (
@@ -71,3 +65,8 @@ function BurgerIngredients() {
 }
 
 export default BurgerIngredients
+
+BurgerIngredients.propTypes = {
+  text: ingredientPropType,
+  price: ingredientPropType,
+}
