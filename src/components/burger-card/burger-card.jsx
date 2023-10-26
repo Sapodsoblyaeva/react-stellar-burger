@@ -17,7 +17,13 @@ function BurgerCard(props) {
           <p className='text text_type_digits-default'>{props.price}</p>
           <CurrencyIcon type='primary' />
         </div>
-        <p className={`${'text text_type_main-default'} ${styles.burgercard__name}`}>{props.text}</p>
+        <p
+          className={`${'text text_type_main-default'} ${
+            styles.burgercard__name
+          }`}
+        >
+          {props.text}
+        </p>
       </div>
     </div>
   )

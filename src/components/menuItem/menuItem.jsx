@@ -17,4 +17,4 @@ function MenuItem(props) {
   )
 }
 
-export default MenuItem;
+export default MenuItem

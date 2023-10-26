@@ -16,13 +16,17 @@ function Header() {
           </div>
           <div className={`${styles.header__options} ${'pl-5 pr-5 pb-4 pt-4'}`}>
             <ListIcon type='secondary' />
-            <p className={'text text_type_main-default text_color_inactive'}>Лента Заказов</p>
+            <p className={'text text_type_main-default text_color_inactive'}>
+              Лента Заказов
+            </p>
           </div>
         </div>
         <Logo />
         <div className={`${styles.header__options} ${'pl-5 pr-5 pb-4 pt-4'}`}>
           <ProfileIcon type='secondary' />
-          <p className={'text text_type_main-default text_color_inactive'}>Личный Кабинет</p>
+          <p className={'text text_type_main-default text_color_inactive'}>
+            Личный Кабинет
+          </p>
         </div>
       </div>
     </div>
