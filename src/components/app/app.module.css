@@ -5,3 +5,9 @@
   background-color: #131316;
   color: #f2f2f3;
 }
+
+.app__mainPage {
+  display: grid;
+  grid-template-columns: repeat(2, 600px);
+  column-gap: 40px;
+}

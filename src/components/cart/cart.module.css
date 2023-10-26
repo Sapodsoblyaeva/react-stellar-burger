@@ -1,0 +1,35 @@
+.cart {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  width: 100%;
+  margin-top: 100px;
+  height: 656px;
+  overflow-y: scroll;
+}
+
+.cartMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.cart__totalPrice {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 40px;
+}
+
+.cart__cost {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+}
+
+.cart__priceIcon {
+    width: 36px;
+    height: 36px;
+}

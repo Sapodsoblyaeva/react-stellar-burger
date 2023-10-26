@@ -1,0 +1,13 @@
+.menuItem__item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .menuItem__item:last-of-type {
+    margin-bottom: 0;
+  }
