@@ -7,29 +7,46 @@ import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 function Header() {
   return (
-    <div className='p-4'>
+    <header className='p-4'>
       <div className={styles.header}>
-        <div className={styles.header__menu}>
+        <nav className={styles.header__menu}>
           <div className={`${styles.header__options} ${'pl-5 pr-5 pb-4 pt-4'}`}>
             <BurgerIcon type='primary' />
-            <p className={'text text_type_main-default'}>Конструктор</p>
+            <a
+              className={`${
+                styles.header__link
+              } ${'text text_type_main-default'}`}
+              href='#'
+            >
+              Конструктор
+            </a>
           </div>
           <div className={`${styles.header__options} ${'pl-5 pr-5 pb-4 pt-4'}`}>
             <ListIcon type='secondary' />
-            <p className={'text text_type_main-default text_color_inactive'}>
+            <a
+              className={`${
+                styles.header__link
+              } ${'text text_type_main-default text_color_inactive'}`}
+              href='#'
+            >
               Лента Заказов
-            </p>
+            </a>
           </div>
-        </div>
+        </nav>
         <Logo />
         <div className={`${styles.header__options} ${'pl-5 pr-5 pb-4 pt-4'}`}>
           <ProfileIcon type='secondary' />
-          <p className={'text text_type_main-default text_color_inactive'}>
+          <a
+            className={`${
+              styles.header__link
+            } ${'text text_type_main-default text_color_inactive'}`}
+            href='#'
+          >
             Личный Кабинет
-          </p>
+          </a>
         </div>
       </div>
-    </div>
+    </header>
   )
 }
 

@@ -7,10 +7,10 @@ function App() {
   return (
     <div className={styles.app}>
       <Header />
-      <div className={styles.app__mainPage}>
+      <main className={styles.app__mainPage}>
         <BurgerIngredients />
         <BurgerConstructor />
-      </div>
+      </main>
     </div>
   )
 }

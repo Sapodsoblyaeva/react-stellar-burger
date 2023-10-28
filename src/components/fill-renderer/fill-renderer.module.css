@@ -1,0 +1,9 @@
+.fillRenderer__card {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 24px;
+  row-gap: 32px;
+  margin: 24px auto 40px;
+  flex-wrap: wrap;
+}

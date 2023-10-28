@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types'
 
-export const ingredientPropType = PropTypes.shape({
-  //укажите здесь prop-types для ингридиента
-  text: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+export const burgerCardPropType = PropTypes.shape({
+  props: PropTypes.object.isRequired,
 })
 
-export const constructorPropType = PropTypes.shape({
-  //укажите здесь prop-types для ингридиента
-  text: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  type: PropTypes.string,
-  isLocked: PropTypes.bool,
+export const menuItemPropType = PropTypes.shape({
+  props: PropTypes.object.isRequired,
+})
+
+export const titlePropType = PropTypes.shape({
+  title: PropTypes.string.isRequired,
+  style: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 })

@@ -1,3 +1,5 @@
+import { titlePropType } from '../../utils/prop-types'
+
 function Title(props) {
   if (props.type === 'h1') {
     return (
@@ -15,3 +17,7 @@ function Title(props) {
 }
 
 export default Title
+
+Title.propTypes = {
+  props: titlePropType,
+}

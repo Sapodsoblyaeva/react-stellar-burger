@@ -11,3 +11,7 @@
 .menuItem__item:last-of-type {
   margin-bottom: 0;
 }
+
+.menuItem__topping {
+  margin-left: 24px;
+}
