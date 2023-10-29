@@ -1,5 +1,7 @@
 import styles from './constructor-renderer.module.css'
 import MenuItem from '../menu-item/menu-item'
+import { constructorRendererPropType } from '../../utils/prop-types'
+import PropTypes from 'prop-types'
 
 const ConstructorRenderer = ({ data }) => (
   <div className={`${styles.constructorRenderer__menu}`}>
@@ -49,3 +51,7 @@ const ConstructorRenderer = ({ data }) => (
 )
 
 export default ConstructorRenderer
+
+ConstructorRenderer.propTypes = {
+  data: PropTypes.arrayOf(constructorRendererPropType),
+}

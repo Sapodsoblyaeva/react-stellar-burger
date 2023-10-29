@@ -13,3 +13,11 @@ export const titlePropType = PropTypes.shape({
   style: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 })
+
+export const constructorRendererPropType = PropTypes.shape({
+  data: PropTypes.object
+})
+
+export const fillRendererPropType = PropTypes.shape({
+  data: PropTypes.object,
+})

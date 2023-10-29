@@ -1,5 +1,7 @@
 import styles from './fill-renderer.module.css'
 import BurgerCard from '../burger-card/burger-card'
+import { fillRendererPropType } from '../../utils/prop-types'
+import PropTypes from 'prop-types'
 
 const FillRenderer = ({ data, part }) => (
   <div>
@@ -21,3 +23,8 @@ const FillRenderer = ({ data, part }) => (
 )
 
 export default FillRenderer
+
+FillRenderer.propTypes = {
+  data: PropTypes.arrayOf(fillRendererPropType),
+  part: PropTypes.string.isRequired
+}
