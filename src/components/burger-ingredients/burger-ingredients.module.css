@@ -1,0 +1,31 @@
+.burgeringredients {
+  max-width: 600px;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.burgeringredients__title {
+  text-align: start;
+  margin-bottom: 20px;
+  margin-left: 40px;
+}
+
+.burgeringredients__subtitle {
+  margin-left: 40px;
+  text-align: start;
+}
+
+.burgeringredients__menu {
+  height: 700px;
+  overflow-y: scroll;
+}
+
+.burgeringredients__card {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 24px;
+  row-gap: 32px;
+  margin: 24px auto;
+  flex-wrap: wrap;
+}
