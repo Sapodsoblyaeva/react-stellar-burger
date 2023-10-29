@@ -7,7 +7,7 @@ const ConstructorRenderer = ({ data }) => (
   <div className={`${styles.constructorRenderer__menu}`}>
     {data.map(
       (item) =>
-        item._id === '60666c42cc7b410027a1a9b1' && (
+        item._id === '643d69a5c3f7b9001cfa093c' && (
           <MenuItem
             key={item._id}
             text={`${item.name} (верх)`}
@@ -36,7 +36,7 @@ const ConstructorRenderer = ({ data }) => (
     </div>
     {data.map(
       (item) =>
-        item._id === '60666c42cc7b410027a1a9b1' && (
+        item._id === '643d69a5c3f7b9001cfa093c' && (
           <MenuItem
             key={item._id}
             text={`${item.name} (низ)`}
