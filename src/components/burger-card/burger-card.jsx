@@ -5,6 +5,10 @@ import Modal from '../modal/modal'
 import IngredientsDetails from '../ingredients-details/ingredients-details'
 import { useState } from 'react'
 import PropTypes from 'prop-types'
+import ModalOverlay from '../modal-overlay/modal-overlay'
+import { createPortal } from 'react-dom'
+// import { createPortal } from 'react-dom'
+// import { rootModal } from '../../utils/constants'
 
 export default function BurgerCard({
   img,
@@ -48,17 +52,20 @@ export default function BurgerCard({
           {text}
         </p>
       </div>
-      {isOpened && (
-        <Modal setIsOpened={setIsOpened}>
-          <IngredientsDetails
-            name={text}
-            img={img}
-            calories={calories}
-            fat={fat}
-            proteins={proteins}
-            carbohydrates={carbohydrates}
-          />
-        </Modal>
+      {isOpened && createPortal(
+        <div className={styles.burgercard__modal}>
+          <ModalOverlay setIsOpened={setIsOpened} />
+          <Modal setIsOpened={setIsOpened}>
+            <IngredientsDetails
+              name={text}
+              img={img}
+              calories={calories}
+              fat={fat}
+              proteins={proteins}
+              carbohydrates={carbohydrates}
+            />
+          </Modal>
+        </div>, document.body
       )}
     </div>
   )
