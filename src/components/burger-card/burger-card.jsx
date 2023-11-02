@@ -1,25 +1,43 @@
 import styles from './burger-card.module.css'
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { burgerCardPropType } from '../../utils/prop-types'
+import Modal from '../modal/modal'
+import IngredientsDetails from '../ingredients-details/ingredients-details'
+import { useState } from 'react'
+import PropTypes from 'prop-types'
 
-function BurgerCard(props) {
+export default function BurgerCard({
+  img,
+  text,
+  price,
+  calories,
+  fat,
+  proteins,
+  carbohydrates,
+}) {
+  const [isOpened, setIsOpened] = useState(false)
+
   return (
-    <div className={styles.burgercard__subtitleSnacks}>
-      <div className={styles.burgercard}>
+    <div
+      className={styles.burgercard__subtitleSnacks}
+      onClick={() => setIsOpened(false)}
+    >
+      <div
+        className={styles.burgercard}
+        onClick={(e) => {
+          e.stopPropagation()
+          setIsOpened(true)
+        }}
+      >
         <Counter
           count={1}
           size='default'
           extraClass='m-1'
           className={styles.burgercard__counter}
         />
-        <img
-          className={styles.burgercard__image}
-          src={props.img}
-          alt={props.text}
-        ></img>
+        <img className={styles.burgercard__image} src={img} alt={text}></img>
         <div className={styles.burgercard__priceBlock}>
-          <p className='text text_type_digits-default'>{props.price}</p>
+          <p className='text text_type_digits-default'>{price}</p>
           <CurrencyIcon type='primary' />
         </div>
         <p
@@ -27,15 +45,31 @@ function BurgerCard(props) {
             styles.burgercard__name
           }`}
         >
-          {props.text}
+          {text}
         </p>
       </div>
+      {isOpened && (
+        <Modal setIsOpened={setIsOpened}>
+          <IngredientsDetails
+            name={text}
+            img={img}
+            calories={calories}
+            fat={fat}
+            proteins={proteins}
+            carbohydrates={carbohydrates}
+          />
+        </Modal>
+      )}
     </div>
   )
 }
 
-export default BurgerCard
-
 BurgerCard.propTypes = {
-  props: burgerCardPropType,
+  text: PropTypes.string.isRequired,
+  img: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  calories: PropTypes.number,
+  fat: PropTypes.number,
+  proteins: PropTypes.number,
+  carbohydrades: PropTypes.number,
 }

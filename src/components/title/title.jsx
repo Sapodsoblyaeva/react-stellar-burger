@@ -1,4 +1,4 @@
-import { titlePropType } from '../../utils/prop-types'
+import PropTypes from 'prop-types'
 
 function Title(props) {
   if (props.type === 'h1') {
@@ -13,11 +13,19 @@ function Title(props) {
         {props.title}
       </h2>
     )
+  } else if (props.type === 'h2_digits') {
+    return (
+      <h2 className={`${'text text_type_digits-large'} ${props.style}`}>
+      {props.title}
+    </h2>
+    )
   }
 }
 
 export default Title
 
 Title.propTypes = {
-  props: titlePropType,
+  title: PropTypes.string.isRequired,
+  style: PropTypes.string,
+  type: PropTypes.string.isRequired,
 }

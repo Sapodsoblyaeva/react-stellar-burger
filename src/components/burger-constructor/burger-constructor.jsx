@@ -2,14 +2,14 @@ import styles from './burger-constructor.module.css'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import ConstructorRenderer from '../constructor-renderer/constructor-renderer'
-
+import Modal from '../modal/modal'
 import { useState, useEffect } from 'react'
+import { apiIngredients } from '../../utils/constants'
+import OrderDetails from '../order-details/order-details'
 
-export const apiIngredients =
-  'https://norma.nomoreparties.space/api/ingredients'
-
-function BurgerConstructor() {
+export default function BurgerConstructor() {
   const [ingredients, setIngredients] = useState([])
+  const [isOpened, setIsOpened] = useState(false)
 
   useEffect(() => {
     const getIngredients = () => {
@@ -40,12 +40,22 @@ function BurgerConstructor() {
             type='primary'
           />
         </div>
-        <Button htmlType='button' type='primary' size='medium'>
-          Оформить заказ
-        </Button>
+        <div>
+          <Button
+            htmlType='button'
+            type='primary'
+            size='medium'
+            onClick={() => setIsOpened(true)}
+          >
+            Оформить заказ
+          </Button>
+        </div>
       </div>
+      {isOpened && (
+        <Modal setIsOpened={setIsOpened}>
+          <OrderDetails />
+        </Modal>
+      )}
     </section>
   )
 }
-
-export default BurgerConstructor

@@ -5,7 +5,7 @@ import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
-function Header() {
+export default function Header() {
   return (
     <header className='p-4'>
       <div className={styles.header}>
@@ -49,5 +49,3 @@ function Header() {
     </header>
   )
 }
-
-export default Header

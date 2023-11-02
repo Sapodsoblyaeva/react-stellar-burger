@@ -1,0 +1,30 @@
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  margin: 50px auto 60px;
+}
+
+.ingredients__description {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.ingredients__image {
+  margin-bottom: 16px;
+  width: 480px;
+  height: 240px;
+}
+
+.ingredients__components {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.ingredients__caption {
+  text-align: center;
+}

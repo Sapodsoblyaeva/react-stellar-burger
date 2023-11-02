@@ -1,8 +1,7 @@
 import styles from './menu-item.module.css'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-
+import PropTypes from 'prop-types'
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { menuItemPropType } from '../../utils/prop-types'
 
 function MenuItem(props) {
   return props.type !== undefined ? (
@@ -30,5 +29,8 @@ function MenuItem(props) {
 export default MenuItem
 
 MenuItem.propTypes = {
-  props: menuItemPropType,
+  text: PropTypes.string,
+  price: PropTypes.number,
+  type: PropTypes.string,
+  isLocked: PropTypes.bool
 }
