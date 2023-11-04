@@ -1,36 +1,20 @@
 import styles from './burger-card.module.css'
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import Modal from '../modal/modal'
-import IngredientsDetails from '../ingredients-details/ingredients-details'
-import { useState } from 'react'
 import PropTypes from 'prop-types'
-import ModalOverlay from '../modal-overlay/modal-overlay'
-import { createPortal } from 'react-dom'
-// import { createPortal } from 'react-dom'
-// import { rootModal } from '../../utils/constants'
 
-export default function BurgerCard({
-  img,
-  text,
-  price,
-  calories,
-  fat,
-  proteins,
-  carbohydrates,
-}) {
-  const [isOpened, setIsOpened] = useState(false)
+export default function BurgerCard({ data, setValues, openPopup }) {
+  const getValues = () => {
+    setValues(data)
+  }
 
   return (
-    <div
-      className={styles.burgercard__subtitleSnacks}
-      onClick={() => setIsOpened(false)}
-    >
+    <div className={styles.burgercard__subtitleSnacks}>
       <div
         className={styles.burgercard}
-        onClick={(e) => {
-          e.stopPropagation()
-          setIsOpened(true)
+        onClick={() => {
+          openPopup()
+          getValues()
         }}
       >
         <Counter
@@ -39,9 +23,13 @@ export default function BurgerCard({
           extraClass='m-1'
           className={styles.burgercard__counter}
         />
-        <img className={styles.burgercard__image} src={img} alt={text}></img>
+        <img
+          className={styles.burgercard__image}
+          src={data.image}
+          alt={data.name}
+        ></img>
         <div className={styles.burgercard__priceBlock}>
-          <p className='text text_type_digits-default'>{price}</p>
+          <p className='text text_type_digits-default'>{data.price}</p>
           <CurrencyIcon type='primary' />
         </div>
         <p
@@ -49,34 +37,15 @@ export default function BurgerCard({
             styles.burgercard__name
           }`}
         >
-          {text}
+          {data.name}
         </p>
       </div>
-      {isOpened && createPortal(
-        <div className={styles.burgercard__modal}>
-          <ModalOverlay setIsOpened={setIsOpened} />
-          <Modal setIsOpened={setIsOpened}>
-            <IngredientsDetails
-              name={text}
-              img={img}
-              calories={calories}
-              fat={fat}
-              proteins={proteins}
-              carbohydrates={carbohydrates}
-            />
-          </Modal>
-        </div>, document.body
-      )}
     </div>
   )
 }
 
 BurgerCard.propTypes = {
-  text: PropTypes.string.isRequired,
-  img: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  calories: PropTypes.number,
-  fat: PropTypes.number,
-  proteins: PropTypes.number,
-  carbohydrades: PropTypes.number,
+  data: PropTypes.object,
+  setValues: PropTypes.func,
+  openPopup: PropTypes.func,
 }

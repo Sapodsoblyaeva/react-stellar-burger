@@ -7,3 +7,7 @@ export const constructorRendererPropType = PropTypes.shape({
 export const fillRendererPropType = PropTypes.shape({
   data: PropTypes.object,
 })
+
+export const ingredientsPropType = PropTypes.shape({
+  ingredients: PropTypes.object,
+})

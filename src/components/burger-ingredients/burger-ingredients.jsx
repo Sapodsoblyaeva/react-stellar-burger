@@ -2,23 +2,17 @@ import styles from './burger-ingredients.module.css'
 import FillMenu from '../fill-menu/fill-menu'
 import Title from '../title/title'
 import FillRenderer from '../fill-renderer/fill-renderer'
-import { useState, useEffect } from 'react'
-import { apiIngredients } from '../../utils/constants'
+import { ingredientsPropType } from '../../utils/prop-types'
+import PropTypes from 'prop-types'
+import Modal from '../modal/modal'
+import IngredientsDetails from '../ingredients-details/ingredients-details'
+import { useModal } from '../../hooks/useModal'
+import { useState } from 'react'
 
-export default function BurgerIngredients() {
-  const [ingredients, setIngredients] = useState([])
+export default function BurgerIngredients({ ingredients }) {
+  const { isModalOpen, openModal, closeModal } = useModal()
 
-  useEffect(() => {
-    const getIngredients = () => {
-      fetch(apiIngredients)
-        .then((res) =>
-          res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-        )
-        .then((result) => setIngredients(result.data))
-        .catch((error) => console.error(error))
-    }
-    getIngredients()
-  }, [])
+  const [values, setValues] = useState({})
 
   return (
     <section className={styles.burgeringredients}>
@@ -34,20 +28,44 @@ export default function BurgerIngredients() {
           style={styles.burgeringredients__subtitle}
           title='Булки'
         />
-        <FillRenderer data={ingredients} part='bun' />
+        <FillRenderer
+          data={ingredients}
+          setValues={setValues}
+          openPopup={openModal}
+          part='bun'
+        />
         <Title
           type='h2'
           style={styles.burgeringredients__subtitle}
           title='Соусы'
         />
-        <FillRenderer data={ingredients} part='sauce' />
+        <FillRenderer
+          data={ingredients}
+          setValues={setValues}
+          openPopup={openModal}
+          part='sauce'
+        />
         <Title
           type='h2'
           style={styles.burgeringredients__subtitle}
           title='Начинка'
         />
-        <FillRenderer data={ingredients} part='main' />
+        <FillRenderer
+          data={ingredients}
+          setValues={setValues}
+          openPopup={openModal}
+          part='main'
+        />
       </div>
+      {isModalOpen && (
+        <Modal closePopup={closeModal}>
+          <IngredientsDetails data={values} />
+        </Modal>
+      )}
     </section>
   )
+}
+
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientsPropType),
 }

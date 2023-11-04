@@ -3,7 +3,7 @@ import Title from '../title/title'
 import ProductData from '../product-data/product-data'
 import PropTypes from 'prop-types'
 
-export default function IngredientsDetails(props) {
+export default function IngredientsDetails({ data }) {
   return (
     <div className={styles.ingredients}>
       <Title
@@ -12,19 +12,23 @@ export default function IngredientsDetails(props) {
         type='h1'
       />
       <div className={styles.ingredients__description}>
-        <img className={styles.ingredients__image} src={props.img}></img>
+        <img
+          className={styles.ingredients__image}
+          src={data.image}
+          alt={data.name}
+        ></img>
         <p
           className={`${'text text_type_main-medium'} ${
             styles.ingredients__caption
           }`}
         >
-          {props.name}
+          {data.name}
         </p>
         <div className={styles.ingredients__components}>
-          <ProductData name='Калории,ккал' value={props.calories} />
-          <ProductData name='Белки, г' value={props.proteins} />
-          <ProductData name='Жиры, г' value={props.fat} />
-          <ProductData name='Углеводы, г' value={props.carbohydrates} />
+          <ProductData name='Калории,ккал' value={data.calories} />
+          <ProductData name='Белки, г' value={data.proteins} />
+          <ProductData name='Жиры, г' value={data.fat} />
+          <ProductData name='Углеводы, г' value={data.carbohydrates} />
         </div>
       </div>
     </div>
@@ -32,10 +36,5 @@ export default function IngredientsDetails(props) {
 }
 
 IngredientsDetails.propTypes = {
-  img: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  calories: PropTypes.number,
-  fat: PropTypes.number,
-  proteins: PropTypes.number,
-  carbohydrates: PropTypes.number,
+  data: PropTypes.object,
 }

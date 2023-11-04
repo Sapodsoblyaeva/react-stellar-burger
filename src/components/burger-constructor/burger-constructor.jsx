@@ -3,25 +3,13 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import ConstructorRenderer from '../constructor-renderer/constructor-renderer'
 import Modal from '../modal/modal'
-import { useState, useEffect } from 'react'
-import { apiIngredients } from '../../utils/constants'
 import OrderDetails from '../order-details/order-details'
+import { useModal } from '../../hooks/useModal'
+import PropTypes from 'prop-types'
+import { ingredientsPropType } from '../../utils/prop-types'
 
-export default function BurgerConstructor() {
-  const [ingredients, setIngredients] = useState([])
-  const [isOpened, setIsOpened] = useState(false)
-
-  useEffect(() => {
-    const getIngredients = () => {
-      fetch(apiIngredients)
-        .then((res) =>
-          res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-        )
-        .then((result) => setIngredients(result.data))
-        .catch((error) => console.error(error))
-    }
-    getIngredients()
-  }, [])
+export default function BurgerConstructor({ ingredients }) {
+  const { isModalOpen, openModal, closeModal } = useModal()
 
   return (
     <section className={styles.burgerConstructor}>
@@ -45,17 +33,21 @@ export default function BurgerConstructor() {
             htmlType='button'
             type='primary'
             size='medium'
-            onClick={() => setIsOpened(true)}
+            onClick={openModal}
           >
             Оформить заказ
           </Button>
         </div>
       </div>
-      {isOpened && (
-        <Modal setIsOpened={setIsOpened}>
+      {isModalOpen && (
+        <Modal closePopup={closeModal}>
           <OrderDetails />
         </Modal>
       )}
     </section>
   )
+}
+
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientsPropType),
 }

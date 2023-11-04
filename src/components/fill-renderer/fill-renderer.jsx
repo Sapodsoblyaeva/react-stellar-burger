@@ -3,26 +3,19 @@ import BurgerCard from '../burger-card/burger-card'
 import { fillRendererPropType } from '../../utils/prop-types'
 import PropTypes from 'prop-types'
 
-export default function FillRenderer({ data, part }) {
+export default function FillRenderer({ data, part, setValues, openPopup }) {
   return (
     <div>
       <div className={styles.fillRenderer__card}>
         {data.map(
           (item) =>
             item.type === part && (
-              <div key={item._id}>
-                <BurgerCard
-                  key={item._id}
-                  text={item.name}
-                  img={item.image}
-                  price={item.price}
-                  alt={item.name}
-                  calories={item.calories}
-                  fat={item.fat}
-                  proteins={item.proteins}
-                  carbohydrates={item.carbohydrates}
-                />
-              </div>
+              <BurgerCard
+                key={item._id}
+                data={item}
+                setValues={setValues}
+                openPopup={openPopup}
+              />
             )
         )}
       </div>
@@ -33,4 +26,6 @@ export default function FillRenderer({ data, part }) {
 FillRenderer.propTypes = {
   data: PropTypes.arrayOf(fillRendererPropType),
   part: PropTypes.string.isRequired,
+  setValues: PropTypes.func,
+  openPopup: PropTypes.func,
 }
