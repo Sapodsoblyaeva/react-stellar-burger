@@ -1,0 +1,22 @@
+.order {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  margin: 120px auto;
+}
+
+.order__title {
+  margin-bottom: 32px;
+}
+
+.order__image {
+  margin: 60px auto;
+  width: 120px;
+  height: 120px;
+}
+
+.order__caption {
+  margin-top: 8px;
+}

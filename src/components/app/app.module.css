@@ -4,6 +4,7 @@
   height: 100vh;
   background-color: #131316;
   color: #f2f2f3;
+  z-index: 0;
 }
 
 .app__mainPage {
@@ -11,4 +12,8 @@
   grid-template-columns: repeat(2, 600px);
   column-gap: 40px;
   margin: 0 auto;
+}
+
+.app__popup {
+  position: relative;
 }

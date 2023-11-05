@@ -1,9 +1,9 @@
 import styles from './fill-menu.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import React from 'react'
+import {useState} from 'react'
 
-function FillMenu() {
-  const [current, setCurrent] = React.useState('one')
+export default function FillMenu() {
+  const [current, setCurrent] = useState('one')
   return (
     <div className={styles.fillmenu}>
       <Tab value='one' active={current === 'one'} onClick={setCurrent}>
@@ -19,4 +19,3 @@ function FillMenu() {
   )
 }
 
-export default FillMenu

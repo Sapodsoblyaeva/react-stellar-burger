@@ -1,12 +1,22 @@
 import styles from './burger-card.module.css'
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { burgerCardPropType } from '../../utils/prop-types'
+import PropTypes from 'prop-types'
 
-function BurgerCard(props) {
+export default function BurgerCard({ data, setValues, openPopup }) {
+  const getValues = () => {
+    setValues(data)
+  }
+
   return (
     <div className={styles.burgercard__subtitleSnacks}>
-      <div className={styles.burgercard}>
+      <div
+        className={styles.burgercard}
+        onClick={() => {
+          openPopup()
+          getValues()
+        }}
+      >
         <Counter
           count={1}
           size='default'
@@ -15,11 +25,11 @@ function BurgerCard(props) {
         />
         <img
           className={styles.burgercard__image}
-          src={props.img}
-          alt={props.text}
+          src={data.image}
+          alt={data.name}
         ></img>
         <div className={styles.burgercard__priceBlock}>
-          <p className='text text_type_digits-default'>{props.price}</p>
+          <p className='text text_type_digits-default'>{data.price}</p>
           <CurrencyIcon type='primary' />
         </div>
         <p
@@ -27,15 +37,15 @@ function BurgerCard(props) {
             styles.burgercard__name
           }`}
         >
-          {props.text}
+          {data.name}
         </p>
       </div>
     </div>
   )
 }
 
-export default BurgerCard
-
 BurgerCard.propTypes = {
-  props: burgerCardPropType,
+  data: PropTypes.object,
+  setValues: PropTypes.func,
+  openPopup: PropTypes.func,
 }

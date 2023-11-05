@@ -1,11 +1,19 @@
 import styles from './burger-ingredients.module.css'
 import FillMenu from '../fill-menu/fill-menu'
-import BurgerCard from '../burger-card/burger-card'
 import Title from '../title/title'
-import { data } from '../../utils/data'
 import FillRenderer from '../fill-renderer/fill-renderer'
+import { ingredientsPropType } from '../../utils/prop-types'
+import PropTypes from 'prop-types'
+import Modal from '../modal/modal'
+import IngredientsDetails from '../ingredients-details/ingredients-details'
+import { useModal } from '../../hooks/useModal'
+import { useState } from 'react'
 
-function BurgerIngredients() {
+export default function BurgerIngredients({ ingredients }) {
+  const { isModalOpen, openModal, closeModal } = useModal()
+
+  const [values, setValues] = useState({})
+
   return (
     <section className={styles.burgeringredients}>
       <Title
@@ -20,22 +28,44 @@ function BurgerIngredients() {
           style={styles.burgeringredients__subtitle}
           title='Булки'
         />
-        <FillRenderer data={data} part='bun' />
+        <FillRenderer
+          data={ingredients}
+          setValues={setValues}
+          openPopup={openModal}
+          part='bun'
+        />
         <Title
           type='h2'
           style={styles.burgeringredients__subtitle}
           title='Соусы'
         />
-        <FillRenderer data={data} part='sauce' />
+        <FillRenderer
+          data={ingredients}
+          setValues={setValues}
+          openPopup={openModal}
+          part='sauce'
+        />
         <Title
           type='h2'
           style={styles.burgeringredients__subtitle}
           title='Начинка'
         />
-        <FillRenderer data={data} part='main' />
+        <FillRenderer
+          data={ingredients}
+          setValues={setValues}
+          openPopup={openModal}
+          part='main'
+        />
       </div>
+      {isModalOpen && (
+        <Modal closePopup={closeModal}>
+          <IngredientsDetails data={values} />
+        </Modal>
+      )}
     </section>
   )
 }
 
-export default BurgerIngredients
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientsPropType),
+}
