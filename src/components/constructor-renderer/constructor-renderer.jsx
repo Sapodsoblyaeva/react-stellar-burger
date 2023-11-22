@@ -28,14 +28,14 @@ export default function ConstructorRenderer() {
           }`}
         >
           {components.component.length !== 0 &&
-            components.component.map(
-              (item, index) => item.type !== 'bun' && console.log(item._id)
-              // <MenuItem
-              //   key={index}
-              //   text={item.name}
-              //   thumbnail={item.image}
-              //   price={item.price}
-              // />
+            components.component.map((item, index) => 
+            item.type !== "bun" &&
+              <MenuItem
+                key={index}
+                text={item.name}
+                thumbnail={item.image}
+                price={item.price}
+              />
             )}
         </div>
         {components.component.map(
