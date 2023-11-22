@@ -1,58 +1,59 @@
 import styles from './constructor-renderer.module.css'
 import MenuItem from '../menu-item/menu-item'
-import { constructorRendererPropType } from '../../utils/prop-types'
-import PropTypes from 'prop-types'
+import { ComponentsContext } from '../../services/app-context'
+import { useContext, useMemo } from 'react'
 
-export default function ConstructorRenderer({ data }) {
-  return (
-    <div className={`${styles.constructorRenderer__menu}`}>
-      {data.map(
-        (item) =>
-          item._id === '643d69a5c3f7b9001cfa093c' && (
-            <MenuItem
-              key={item._id}
-              text={`${item.name} (верх)`}
-              thumbnail={item.image}
-              price={item.price}
-              type='top'
-              isLocked={true}
-            />
-          )
-      )}
-      <div
-        className={`${'custom-scroll'} ${
-          styles.constructorRenderer__positions
-        }`}
-      >
-        {data.map((item) =>
-          item.type !== 'bun' ? (
-            <MenuItem
-              key={item._id}
-              text={item.name}
-              thumbnail={item.image}
-              price={item.price}
-            />
-          ) : (
-            console.log()
-          )
+export default function ConstructorRenderer() {
+  const { components } = useContext(ComponentsContext)
+
+  const content = useMemo(() => {
+    return (
+      <>
+        {components.component.map(
+          (item) =>
+            item.type === 'bun' && (
+              <MenuItem
+                key={item._id}
+                text={`${item.name} (верх)`}
+                thumbnail={item.image}
+                price={item.price}
+                type='top'
+                isLocked={true}
+              />
+            )
         )}
-      </div>
-      {data.map(
-        (item) =>
-          item._id === '643d69a5c3f7b9001cfa093c' && (
-            <MenuItem
-              key={item._id}
-              text={`${item.name} (низ)`}
-              thumbnail={item.image}
-              price={item.price}
-              type='bottom'
-              isLocked={true}
-            />
-          )
-      )}
-    </div>
-  )
-}
-ConstructorRenderer.propTypes = {
-  data: PropTypes.arrayOf(constructorRendererPropType),
+        <div
+          className={`${'custom-scroll'} ${
+            styles.constructorRenderer__positions
+          }`}
+        >
+          {components.component.length !== 0 &&
+            components.component.map(
+              (item, index) => item.type !== 'bun' && console.log(item._id)
+              // <MenuItem
+              //   key={index}
+              //   text={item.name}
+              //   thumbnail={item.image}
+              //   price={item.price}
+              // />
+            )}
+        </div>
+        {components.component.map(
+          (item) =>
+            item.type === 'bun' && (
+              <MenuItem
+                key={item._id}
+                text={`${item.name} (низ)`}
+                thumbnail={item.image}
+                price={item.price}
+                type='bottom'
+                isLocked={true}
+              />
+            )
+        )}
+      </>
+    )
+  }, [components])
+
+  return <div className={`${styles.constructorRenderer__menu}`}>{content}</div>
 }

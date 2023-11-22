@@ -8,12 +8,36 @@ import { useModal } from '../../hooks/useModal'
 import PropTypes from 'prop-types'
 import { ingredientsPropType } from '../../utils/prop-types'
 
-export default function BurgerConstructor({ ingredients }) {
+import {
+  TotalPriceContext,
+  AppContext,
+  ComponentsContext,
+  OrderNumberContext,
+} from '../../services/app-context'
+import { useContext, useEffect, useMemo } from 'react'
+
+export default function BurgerConstructor() {
   const { isModalOpen, openModal, closeModal } = useModal()
+  const { ingredients } = useContext(AppContext)
+  const { totalPrice, setTotalPrice } = useContext(TotalPriceContext)
+
+  const { components } = useContext(ComponentsContext)
+
+  const { addNewOrder } = useContext(OrderNumberContext)
+
+  useEffect(() => {
+    let total = 0
+    components.component.map(
+      (item) => (total += item.type === 'bun' ? item.price * 2 : item.price)
+    )
+    setTotalPrice(total)
+  }, [components, setTotalPrice])
+
+  // const getNewOrder = useMemo(() => addNewOrder())
 
   return (
     <section className={styles.burgerConstructor}>
-      <ConstructorRenderer data={ingredients} />
+      <ConstructorRenderer />
       <div className={styles.burgerConstructor__totalPrice}>
         <div className={styles.burgerConstructor__cost}>
           <p
@@ -21,7 +45,7 @@ export default function BurgerConstructor({ ingredients }) {
               styles.burgerConstructor__priceText
             } ${'text text_type_digits-medium'}`}
           >
-            610
+            {totalPrice}
           </p>
           <CurrencyIcon
             className={styles.burgerConstructor__priceIcon}
@@ -33,7 +57,10 @@ export default function BurgerConstructor({ ingredients }) {
             htmlType='button'
             type='primary'
             size='medium'
-            onClick={openModal}
+            onClick={() => {
+              addNewOrder()
+              openModal()
+            }}
           >
             Оформить заказ
           </Button>

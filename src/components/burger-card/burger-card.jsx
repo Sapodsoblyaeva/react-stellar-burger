@@ -2,10 +2,20 @@ import styles from './burger-card.module.css'
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
+import { useContext } from 'react'
+import { ComponentsContext } from '../../services/app-context'
 
 export default function BurgerCard({ data, setValues, openPopup }) {
   const getValues = () => {
     setValues(data)
+  }
+
+  const { dispatch } = useContext(ComponentsContext)
+
+  const addComponent = (item) => {
+    if (item.type === 'bun') {
+      dispatch({ type: 'add-bun', component: item })
+    } else dispatch({ type: 'add', component: item })
   }
 
   return (
@@ -15,6 +25,7 @@ export default function BurgerCard({ data, setValues, openPopup }) {
         onClick={() => {
           openPopup()
           getValues()
+          addComponent(data)
         }}
       >
         <Counter
