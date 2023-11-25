@@ -10,30 +10,52 @@ import { ingredientsPropType } from '../../utils/prop-types'
 
 import {
   TotalPriceContext,
-  AppContext,
   ComponentsContext,
-  OrderNumberContext,
 } from '../../services/app-context'
-import { useContext, useEffect, useMemo } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { addNewOrder } from '../../utils/constants'
+import { useDispatch, useSelector } from 'react-redux'
+import { constructorIngredients } from '../../services/constructor-ingredients/selectors'
+import { loadOrder } from '../../services/order-data/action'
+import { order, orderNumber } from '../../services/order-data/selectors'
 
 export default function BurgerConstructor() {
   const { isModalOpen, openModal, closeModal } = useModal()
-  const { ingredients } = useContext(AppContext)
+
   const { totalPrice, setTotalPrice } = useContext(TotalPriceContext)
 
-  const { components } = useContext(ComponentsContext)
+  const { components } = useSelector(constructorIngredients)
 
-  const { addNewOrder } = useContext(OrderNumberContext)
+  const dispatch = useDispatch()
+
+  const { loading } = useSelector(order)
+
+  const openPopup = useCallback(() => {
+    openModal()
+  }, [loading])
+
+  const orderNumberFromApi = () => {
+    let arr = []
+    components.length !== 0 &&
+      components.map((component) => {
+        arr.push(component.item._id)
+      })
+    dispatch(loadOrder(arr))
+    openPopup()
+  }
 
   useEffect(() => {
     let total = 0
-    components.component.map(
-      (item) => (total += item.type === 'bun' ? item.price * 2 : item.price)
-    )
+    components.length !== 0 &&
+      components.map(
+        (component) =>
+          (total +=
+            component.item.type === 'bun'
+              ? component.item.price * 2
+              : component.item.price)
+      )
     setTotalPrice(total)
   }, [components, setTotalPrice])
-
-  // const getNewOrder = useMemo(() => addNewOrder())
 
   return (
     <section className={styles.burgerConstructor}>
@@ -58,8 +80,7 @@ export default function BurgerConstructor() {
             type='primary'
             size='medium'
             onClick={() => {
-              addNewOrder()
-              openModal()
+              orderNumberFromApi()
             }}
           >
             Оформить заказ

@@ -1,9 +1,17 @@
 import styles from './fill-menu.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import {useState} from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { ScrollContext } from '../../services/app-context'
 
 export default function FillMenu() {
   const [current, setCurrent] = useState('one')
+
+  const { scrollCoordinate } = useContext(ScrollContext)
+
+  useEffect(() => {
+    setCurrent(scrollCoordinate)
+  }, [scrollCoordinate])
+
   return (
     <div className={styles.fillmenu}>
       <Tab value='one' active={current === 'one'} onClick={setCurrent}>
@@ -18,4 +26,3 @@ export default function FillMenu() {
     </div>
   )
 }
-

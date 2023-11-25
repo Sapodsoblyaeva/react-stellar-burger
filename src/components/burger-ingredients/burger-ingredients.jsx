@@ -7,61 +7,90 @@ import PropTypes from 'prop-types'
 import Modal from '../modal/modal'
 import IngredientsDetails from '../ingredients-details/ingredients-details'
 import { useModal } from '../../hooks/useModal'
+import { useSelector } from 'react-redux'
+import { allIngredients } from '../../services/ingredients/selectors'
 import { useState } from 'react'
+import { ScrollContext } from '../../services/app-context'
 
-export default function BurgerIngredients({ ingredients }) {
+export default function BurgerIngredients() {
   const { isModalOpen, openModal, closeModal } = useModal()
+  const { ingredients } = useSelector(allIngredients)
 
-  const [values, setValues] = useState({})
+  const [scrollCoordinate, setScrollCoordinate] = useState(1)
+
+  const handleScroll = (e) => {
+    console.log(e.currentTarget.scrollTop)
+    if (e.currentTarget.scrollTop < 288) {
+      setScrollCoordinate('one')
+    } else if (
+      e.currentTarget.scrollTop < 801 &&
+      e.currentTarget.scrollTop > 289
+    ) {
+      setScrollCoordinate('two')
+    } else if (
+      e.currentTarget.scrollTop < 1400 &&
+      e.currentTarget.scrollTop > 802
+    ) {
+      setScrollCoordinate('three')
+    }
+  }
 
   return (
     <section className={styles.burgeringredients}>
-      <Title
-        type='h1'
-        style={styles.burgeringredients__title}
-        title='Соберите Бургер'
-      />
-      <FillMenu />
-      <div className={`${'custom-scroll'} ${styles.burgeringredients__menu}`}>
+      <ScrollContext.Provider value={{ scrollCoordinate, setScrollCoordinate }}>
         <Title
-          type='h2'
-          style={styles.burgeringredients__subtitle}
-          title='Булки'
+          type='h1'
+          style={styles.burgeringredients__title}
+          title='Соберите Бургер'
         />
-        <FillRenderer
-          data={ingredients}
-          setValues={setValues}
-          openPopup={openModal}
-          part='bun'
-        />
-        <Title
-          type='h2'
-          style={styles.burgeringredients__subtitle}
-          title='Соусы'
-        />
-        <FillRenderer
-          data={ingredients}
-          setValues={setValues}
-          openPopup={openModal}
-          part='sauce'
-        />
-        <Title
-          type='h2'
-          style={styles.burgeringredients__subtitle}
-          title='Начинка'
-        />
-        <FillRenderer
-          data={ingredients}
-          setValues={setValues}
-          openPopup={openModal}
-          part='main'
-        />
-      </div>
-      {isModalOpen && (
-        <Modal closePopup={closeModal}>
-          <IngredientsDetails data={values} />
-        </Modal>
-      )}
+        <FillMenu />
+        <div
+          className={`${'custom-scroll'} ${styles.burgeringredients__menu}`}
+          onScroll={handleScroll}
+        >
+          <Title
+            type='h2'
+            style={styles.burgeringredients__subtitle}
+            title='Булки'
+            id='Buns'
+          />
+          <FillRenderer
+            data={ingredients}
+            openPopup={openModal}
+            part='bun'
+            id='Buns'
+          />
+          <Title
+            type='h2'
+            style={styles.burgeringredients__subtitle}
+            title='Соусы'
+            id='Sauces'
+          />
+          <FillRenderer
+            data={ingredients}
+            openPopup={openModal}
+            part='sauce'
+            id='Sauces'
+          />
+          <Title
+            type='h2'
+            style={styles.burgeringredients__subtitle}
+            title='Начинка'
+            id='Main'
+          />
+          <FillRenderer
+            data={ingredients}
+            openPopup={openModal}
+            part='main'
+            id='Main'
+          />
+        </div>
+        {isModalOpen && (
+          <Modal closePopup={closeModal}>
+            <IngredientsDetails />
+          </Modal>
+        )}
+      </ScrollContext.Provider>
     </section>
   )
 }

@@ -1,11 +1,11 @@
 import styles from './order-details.module.css'
 import Title from '../title/title'
 import done from '../../images/done.png'
-import { OrderNumberContext } from '../../services/app-context'
-import { useContext } from 'react'
+import { useSelector } from 'react-redux'
+import { order } from '../../services/order-data/selectors'
 
-export default function OrderDetails() {
-  const { orderNumber } = useContext(OrderNumberContext)
+export default function OrderDetails(props) {
+  const { orderNumber } = useSelector(order)
 
   return (
     <div className={styles.order}>

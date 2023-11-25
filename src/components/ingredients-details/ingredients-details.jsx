@@ -2,8 +2,13 @@ import styles from './ingredients-details.module.css'
 import Title from '../title/title'
 import ProductData from '../product-data/product-data'
 import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
+import { ingredient } from '../../services/ingredient-сard/selectors'
 
-export default function IngredientsDetails({ data }) {
+export default function IngredientsDetails() {
+
+  const { card } = useSelector(ingredient)
+
   return (
     <div className={styles.ingredients}>
       <Title
@@ -14,21 +19,21 @@ export default function IngredientsDetails({ data }) {
       <div className={styles.ingredients__description}>
         <img
           className={styles.ingredients__image}
-          src={data.image}
-          alt={data.name}
+          src={card.image}
+          alt={card.name}
         ></img>
         <p
           className={`${'text text_type_main-medium'} ${
             styles.ingredients__caption
           }`}
         >
-          {data.name}
+          {card.name}
         </p>
         <div className={styles.ingredients__components}>
-          <ProductData name='Калории,ккал' value={data.calories} />
-          <ProductData name='Белки, г' value={data.proteins} />
-          <ProductData name='Жиры, г' value={data.fat} />
-          <ProductData name='Углеводы, г' value={data.carbohydrates} />
+          <ProductData name='Калории,ккал' value={card.calories} />
+          <ProductData name='Белки, г' value={card.proteins} />
+          <ProductData name='Жиры, г' value={card.fat} />
+          <ProductData name='Углеводы, г' value={card.carbohydrates} />
         </div>
       </div>
     </div>
