@@ -1,4 +1,9 @@
-import { BURGER_INGREDIENTS_ADD, BURGER_INGREDIENTS_DELETE } from './action'
+import {
+  BURGER_INGREDIENTS_ADD,
+  BURGER_INGREDIENTS_DELETE,
+  BURGER_ADD_BUN,
+  BURGER_ADD_CARD,
+} from './action'
 
 const initialState = {
   components: [],
@@ -7,42 +12,31 @@ const initialState = {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case BURGER_INGREDIENTS_ADD:
-    //   console.log(action.payload.item)
       return { ...state, components: [...state.components, action.payload] }
+    case BURGER_ADD_CARD:
+      return {
+        ...state,
+        components: [
+          ...state.components.splice(action.hover, 0, action.payload),
+          ...state.components,
+        ],
+      }
+    case BURGER_ADD_BUN:
+      return {
+        ...state,
+        components: [
+          ...state.components.filter((el) => el.item.type !== 'bun'),
+          action.payload,
+        ],
+      }
     case BURGER_INGREDIENTS_DELETE:
       return {
         ...state,
         components: state.components.filter(
-          (component) => component._id !== action.payload
+          (component) => component.key !== action.payload
         ),
       }
     default:
       return state
   }
 }
-
-// import { AUTH_REQUEST_SUCCESS } from './action'
-
-// const initialState = {
-//   user: null,
-// }
-
-// export const reducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     case AUTH_REQUEST_SUCCESS:
-//       //state.tasks.push(action.payload) - нельзя не изменится адрес
-//       return {
-//         ...state, //описывает все поля, которые трогать нельзя
-//         user: action.payload,
-//       } //возвращаем новый объект с новым адресом (т/е/ сконструировали новый объект на основе старого с использованием спреад оператора)
-//     default:
-//       return state
-//   }
-// }
-
-const a = { p: 16 } //при замене значения на 17, адрес остается тот же
-const b = { p: 16 }
-
-// console.log(a === b) //false == так как сравниваются адреса
-
-//для редакса нужно, чтобы изменился адрес

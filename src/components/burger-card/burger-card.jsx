@@ -2,13 +2,23 @@ import styles from './burger-card.module.css'
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
-import { addIngredient } from '../../services/constructor-ingredients/action'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getIngredientCard } from '../../services/ingredient-сard/action'
+import { useDrag } from 'react-dnd'
+import { constructorIngredients } from '../../services/constructor-ingredients/selectors'
 
 export default function BurgerCard({ data, openPopup }) {
-
   const dispatch = useDispatch()
+
+  const [, dragRef] = useDrag({
+    type: 'ingredients',
+    item: data,
+  })
+
+  const { components } = useSelector(constructorIngredients)
+
+  let orderedIngredients = []
+  components.filter((el) => orderedIngredients.push(el.item._id))
 
   return (
     <div className={styles.burgercard__subtitleSnacks}>
@@ -17,15 +27,21 @@ export default function BurgerCard({ data, openPopup }) {
         onClick={() => {
           openPopup()
           dispatch(getIngredientCard(data))
-          dispatch(addIngredient(data))
         }}
+        ref={dragRef}
       >
-        <Counter
-          count={1}
-          size='default'
-          extraClass='m-1'
-          className={styles.burgercard__counter}
-        />
+        {
+          <Counter
+            count={
+              orderedIngredients.filter(
+                (ingredientId) => ingredientId === data._id
+              ).length
+            }
+            size='default'
+            extraClass='m-1'
+            className={styles.burgercard__counter}
+          />
+        }
         <img
           className={styles.burgercard__image}
           src={data.image}
@@ -49,6 +65,5 @@ export default function BurgerCard({ data, openPopup }) {
 
 BurgerCard.propTypes = {
   data: PropTypes.object,
-  setValues: PropTypes.func,
   openPopup: PropTypes.func,
 }

@@ -4,7 +4,8 @@ import done from '../../images/done.png'
 import { useSelector } from 'react-redux'
 import { order } from '../../services/order-data/selectors'
 
-export default function OrderDetails(props) {
+export default function OrderDetails() {
+  
   const { orderNumber } = useSelector(order)
 
   return (

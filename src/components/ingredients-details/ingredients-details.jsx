@@ -1,12 +1,10 @@
 import styles from './ingredients-details.module.css'
 import Title from '../title/title'
 import ProductData from '../product-data/product-data'
-import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { ingredient } from '../../services/ingredient-сard/selectors'
 
 export default function IngredientsDetails() {
-
   const { card } = useSelector(ingredient)
 
   return (
@@ -38,8 +36,4 @@ export default function IngredientsDetails() {
       </div>
     </div>
   )
-}
-
-IngredientsDetails.propTypes = {
-  data: PropTypes.object,
 }

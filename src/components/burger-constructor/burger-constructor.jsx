@@ -6,20 +6,14 @@ import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
 import { useModal } from '../../hooks/useModal'
 import PropTypes from 'prop-types'
-import { ingredientsPropType } from '../../utils/prop-types'
-
-import {
-  TotalPriceContext,
-  ComponentsContext,
-} from '../../services/app-context'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { addNewOrder } from '../../utils/constants'
+import { TotalPriceContext } from '../../services/app-context'
+import { useCallback, useContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { constructorIngredients } from '../../services/constructor-ingredients/selectors'
 import { loadOrder } from '../../services/order-data/action'
-import { order, orderNumber } from '../../services/order-data/selectors'
+import { order } from '../../services/order-data/selectors'
 
-export default function BurgerConstructor() {
+export default function BurgerConstructor({ onDropHandler }) {
   const { isModalOpen, openModal, closeModal } = useModal()
 
   const { totalPrice, setTotalPrice } = useContext(TotalPriceContext)
@@ -59,7 +53,7 @@ export default function BurgerConstructor() {
 
   return (
     <section className={styles.burgerConstructor}>
-      <ConstructorRenderer />
+      <ConstructorRenderer onDropHandler={onDropHandler} />
       <div className={styles.burgerConstructor__totalPrice}>
         <div className={styles.burgerConstructor__cost}>
           <p
@@ -97,5 +91,5 @@ export default function BurgerConstructor() {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientsPropType),
+  onDropHandler: PropTypes.func,
 }

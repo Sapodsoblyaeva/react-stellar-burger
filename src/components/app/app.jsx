@@ -7,8 +7,12 @@ import { TotalPriceContext } from '../../services/app-context'
 import { useDispatch, useSelector } from 'react-redux'
 import { allIngredients } from '../../services/ingredients/selectors'
 import { loadIngredients } from '../../services/ingredients/action'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 function App() {
+  const [elements, setElements] = useState([])
+  const [draggedElemtns, setDraggedElements] = useState([])
   const { loading, error } = useSelector(allIngredients)
 
   const dispatchIngredients = useDispatch()
@@ -21,27 +25,27 @@ function App() {
 
   if (loading) {
     return <h2>Loading..</h2>
-    // console.log('Loading...')
   }
-
-  // if (!loading) {
-  //   return <h2>Success!!!</h2>
-  //   // console.log('Success!!!')
-  // }
 
   if (!loading && error) {
     return <h2>Something's gone wrong...</h2>
-    // console.log("Something's gone wrong...")
+  }
+
+  const onDropHandler = (item) => {
+    setDraggedElements([...draggedElemtns, item])
+    setElements(elements.filter((el) => el.id !== item.id))
   }
 
   return (
     <div className={styles.app}>
       <Header />
       <main className={styles.app__mainPage}>
-        <TotalPriceContext.Provider value={{ totalPrice, setTotalPrice }}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </TotalPriceContext.Provider>
+        <DndProvider backend={HTML5Backend}>
+          <TotalPriceContext.Provider value={{ totalPrice, setTotalPrice }}>
+            <BurgerIngredients />
+            <BurgerConstructor onDropHandler={onDropHandler} />
+          </TotalPriceContext.Provider>
+        </DndProvider>
       </main>
     </div>
   )

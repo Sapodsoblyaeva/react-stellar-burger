@@ -2,8 +2,6 @@ import styles from './burger-ingredients.module.css'
 import FillMenu from '../fill-menu/fill-menu'
 import Title from '../title/title'
 import FillRenderer from '../fill-renderer/fill-renderer'
-import { ingredientsPropType } from '../../utils/prop-types'
-import PropTypes from 'prop-types'
 import Modal from '../modal/modal'
 import IngredientsDetails from '../ingredients-details/ingredients-details'
 import { useModal } from '../../hooks/useModal'
@@ -19,7 +17,6 @@ export default function BurgerIngredients() {
   const [scrollCoordinate, setScrollCoordinate] = useState(1)
 
   const handleScroll = (e) => {
-    console.log(e.currentTarget.scrollTop)
     if (e.currentTarget.scrollTop < 288) {
       setScrollCoordinate('one')
     } else if (
@@ -52,38 +49,20 @@ export default function BurgerIngredients() {
             type='h2'
             style={styles.burgeringredients__subtitle}
             title='Булки'
-            id='Buns'
           />
-          <FillRenderer
-            data={ingredients}
-            openPopup={openModal}
-            part='bun'
-            id='Buns'
-          />
+          <FillRenderer data={ingredients} openPopup={openModal} part='bun' />
           <Title
             type='h2'
             style={styles.burgeringredients__subtitle}
             title='Соусы'
-            id='Sauces'
           />
-          <FillRenderer
-            data={ingredients}
-            openPopup={openModal}
-            part='sauce'
-            id='Sauces'
-          />
+          <FillRenderer data={ingredients} openPopup={openModal} part='sauce' />
           <Title
             type='h2'
             style={styles.burgeringredients__subtitle}
             title='Начинка'
-            id='Main'
           />
-          <FillRenderer
-            data={ingredients}
-            openPopup={openModal}
-            part='main'
-            id='Main'
-          />
+          <FillRenderer data={ingredients} openPopup={openModal} part='main' />
         </div>
         {isModalOpen && (
           <Modal closePopup={closeModal}>
@@ -93,8 +72,4 @@ export default function BurgerIngredients() {
       </ScrollContext.Provider>
     </section>
   )
-}
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientsPropType),
 }
