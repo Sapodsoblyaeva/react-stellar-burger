@@ -6,27 +6,23 @@ import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
 import { useModal } from '../../hooks/useModal'
 import PropTypes from 'prop-types'
-import { TotalPriceContext } from '../../services/app-context'
-import { useCallback, useContext, useEffect } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { constructorIngredients } from '../../services/constructor-ingredients/selectors'
 import { loadOrder } from '../../services/order-data/action'
 import { order } from '../../services/order-data/selectors'
+import { deleteIngredient, resetConstructor } from '../../services/constructor-ingredients/action'
+// import { resetConstructor } from '../../services/constructor-ingredients/action'
 
 export default function BurgerConstructor({ onDropHandler }) {
-  const { isModalOpen, openModal, closeModal } = useModal()
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [button, setButton] = useState(true)
 
-  const { totalPrice, setTotalPrice } = useContext(TotalPriceContext)
+  const { isModalOpen, openModal, closeModal } = useModal()
 
   const { components } = useSelector(constructorIngredients)
 
   const dispatch = useDispatch()
-
-  const { loading } = useSelector(order)
-
-  const openPopup = useCallback(() => {
-    openModal()
-  }, [loading])
 
   const orderNumberFromApi = () => {
     let arr = []
@@ -35,7 +31,7 @@ export default function BurgerConstructor({ onDropHandler }) {
         arr.push(component.item._id)
       })
     dispatch(loadOrder(arr))
-    openPopup()
+    openModal()
   }
 
   useEffect(() => {
@@ -50,6 +46,13 @@ export default function BurgerConstructor({ onDropHandler }) {
       )
     setTotalPrice(total)
   }, [components, setTotalPrice])
+
+  useEffect(() => {
+    components.length !== 0 &&
+      components.map(
+        (component) => component.item.type === 'bun' && setButton(false)
+      )
+  }, [components, setButton])
 
   return (
     <section className={styles.burgerConstructor}>
@@ -70,6 +73,7 @@ export default function BurgerConstructor({ onDropHandler }) {
         </div>
         <div>
           <Button
+            disabled={button}
             htmlType='button'
             type='primary'
             size='medium'

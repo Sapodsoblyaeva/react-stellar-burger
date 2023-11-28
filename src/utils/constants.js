@@ -2,20 +2,23 @@ import ReactDOM from 'react-dom/client'
 
 export const root = ReactDOM.createRoot(document.getElementById('root'))
 export const rootModal = document.getElementById('modals')
-export const apiIngredients =
-  'https://norma.nomoreparties.space/api/ingredients'
-export const orderNumberApi = 'https://norma.nomoreparties.space/api/orders'
+
+export const baseUrl = 'https://norma.nomoreparties.space/api'
+
+export function checkResponse(res) {
+  return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+}
+
+export function request(endpoint, options) {
+  return fetch(`${baseUrl}/${endpoint}`, options).then(checkResponse)
+}
 
 export const getIngredients = () => {
-  return fetch(apiIngredients)
-    .then((res) =>
-      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-    )
-    .catch(console.error)
+  return request('ingredients')
 }
 
 export const addNewOrder = (arr) => {
-  return fetch(orderNumberApi, {
+  return request('orders', {
     method: 'POST',
     headers: {
       authorization: '08ca101b-72c0-46c7-a5af-c036f69dd465',
@@ -25,8 +28,4 @@ export const addNewOrder = (arr) => {
       ingredients: arr,
     }),
   })
-    .then((res) =>
-      res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-    )
-    .catch(console.error)
 }

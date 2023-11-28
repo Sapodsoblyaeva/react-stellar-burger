@@ -10,21 +10,21 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         orderNumber: action.payload,
-        loading: false,
+        loadingProcess: false,
       }
     }
     case ORDER_PROGRESS: {
       return {
         ...state,
         error: null,
-        loading: true,
+        loadingProcess: true,
       }
     }
     case ORDER_ERROR: {
       return {
         ...state,
         error: action.payload,
-        loading: false,
+        loadingProcess: false,
       }
     }
     default:

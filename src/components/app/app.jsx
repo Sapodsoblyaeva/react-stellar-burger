@@ -9,18 +9,18 @@ import { allIngredients } from '../../services/ingredients/selectors'
 import { loadIngredients } from '../../services/ingredients/action'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import { order } from '../../services/order-data/selectors'
+import { resetConstructor } from '../../services/constructor-ingredients/action'
 
 function App() {
   const [elements, setElements] = useState([])
   const [draggedElemtns, setDraggedElements] = useState([])
   const { loading, error } = useSelector(allIngredients)
 
-  const dispatchIngredients = useDispatch()
-
-  const [totalPrice, setTotalPrice] = useState(0)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatchIngredients(loadIngredients())
+    dispatch(loadIngredients())
   }, [])
 
   if (loading) {
@@ -41,10 +41,8 @@ function App() {
       <Header />
       <main className={styles.app__mainPage}>
         <DndProvider backend={HTML5Backend}>
-          <TotalPriceContext.Provider value={{ totalPrice, setTotalPrice }}>
-            <BurgerIngredients />
-            <BurgerConstructor onDropHandler={onDropHandler} />
-          </TotalPriceContext.Provider>
+          <BurgerIngredients />
+          <BurgerConstructor onDropHandler={onDropHandler} />
         </DndProvider>
       </main>
     </div>

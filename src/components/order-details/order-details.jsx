@@ -1,12 +1,19 @@
 import styles from './order-details.module.css'
 import Title from '../title/title'
 import done from '../../images/done.png'
-import { useSelector } from 'react-redux'
 import { order } from '../../services/order-data/selectors'
+import { useSelector } from 'react-redux'
 
 export default function OrderDetails() {
-  
-  const { orderNumber } = useSelector(order)
+  const { orderNumber, loading, error } = useSelector(order)
+
+  if (loading) {
+    return <h2>Loading...</h2>
+  }
+
+  if (!loading && error) {
+    return <h2>Something's gone wrong...</h2>
+  }
 
   return (
     <div className={styles.order}>
