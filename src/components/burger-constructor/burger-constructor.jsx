@@ -30,7 +30,7 @@ export default function BurgerConstructor({ onDropHandler }) {
       components.map((component) => {
         arr.push(component.item._id)
       })
-    dispatch(loadOrder(arr))
+    dispatch(loadOrder(components))
     openModal()
   }
 
