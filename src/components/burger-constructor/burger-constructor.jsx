@@ -11,7 +11,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { constructorIngredients } from '../../services/constructor-ingredients/selectors'
 import { loadOrder } from '../../services/order-data/action'
 import { order } from '../../services/order-data/selectors'
-import { deleteIngredient, resetConstructor } from '../../services/constructor-ingredients/action'
+import {
+  deleteIngredient,
+  resetConstructor,
+} from '../../services/constructor-ingredients/action'
 // import { resetConstructor } from '../../services/constructor-ingredients/action'
 
 export default function BurgerConstructor({ onDropHandler }) {
@@ -30,7 +33,7 @@ export default function BurgerConstructor({ onDropHandler }) {
       components.map((component) => {
         arr.push(component.item._id)
       })
-    dispatch(loadOrder(components))
+    dispatch(loadOrder(arr))
     openModal()
   }
 
