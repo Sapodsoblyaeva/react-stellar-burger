@@ -1,11 +1,23 @@
 import styles from './order-details.module.css'
 import Title from '../title/title'
 import done from '../../images/done.png'
+import { order } from '../../services/order-data/selectors'
+import { useSelector } from 'react-redux'
 
 export default function OrderDetails() {
+  const { orderNumber, loading, error } = useSelector(order)
+
+  if (loading) {
+    return <h2>Loading...</h2>
+  }
+
+  if (!loading && error) {
+    return <h2>Something's gone wrong...</h2>
+  }
+
   return (
     <div className={styles.order}>
-      <Title style={styles.order__title} title='034536' type='h2_digits' />
+      <Title style={styles.order__title} title={orderNumber} type='h2_digits' />
       <p className='text text_type_main-large'>идентификатор заказа</p>
       <img
         className={styles.order__image}

@@ -3,29 +3,47 @@ import Header from '../header/header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
 import { useState, useEffect } from 'react'
-import { apiIngredients } from '../../utils/constants'
+import { TotalPriceContext } from '../../services/app-context'
+import { useDispatch, useSelector } from 'react-redux'
+import { allIngredients } from '../../services/ingredients/selectors'
+import { loadIngredients } from '../../services/ingredients/action'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { order } from '../../services/order-data/selectors'
+import { resetConstructor } from '../../services/constructor-ingredients/action'
 
 function App() {
-  const [ingredients, setIngredients] = useState([])
+  const [elements, setElements] = useState([])
+  const [draggedElemtns, setDraggedElements] = useState([])
+  const { loading, error } = useSelector(allIngredients)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const getIngredients = () => {
-      fetch(apiIngredients)
-        .then((res) =>
-          res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
-        )
-        .then((result) => setIngredients(result.data))
-        .catch(console.error)
-    }
-    getIngredients()
+    dispatch(loadIngredients())
   }, [])
+
+  if (loading) {
+    return <h2>Loading..</h2>
+  }
+
+  if (!loading && error) {
+    return <h2>Something's gone wrong...</h2>
+  }
+
+  const onDropHandler = (item) => {
+    setDraggedElements([...draggedElemtns, item])
+    setElements(elements.filter((el) => el.id !== item.id))
+  }
 
   return (
     <div className={styles.app}>
       <Header />
       <main className={styles.app__mainPage}>
-        <BurgerIngredients ingredients={ingredients} />
-        <BurgerConstructor ingredients={ingredients} />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor onDropHandler={onDropHandler} />
+        </DndProvider>
       </main>
     </div>
   )

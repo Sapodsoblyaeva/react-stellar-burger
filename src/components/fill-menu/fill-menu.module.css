@@ -5,3 +5,18 @@
   align-content: center;
   margin-bottom: 40px;
 }
+
+/* .fillmenu__links {
+  text-decoration: none;
+  color: white;
+} */
+
+.fillmenu__links_inactive {
+  color: #8585ad;
+  text-decoration: none;
+}
+
+.fillmenu__links {
+  text-decoration: none;
+  color: white;
+}
