@@ -6,7 +6,7 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './form.module.css'
-import { NavLink, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import Title from '../title/title'
 import { useDispatch } from 'react-redux'
 import { login, register } from '../../services/registration/action'
@@ -59,8 +59,6 @@ export const Form = (props) => {
     e.preventDefault()
     successResetPassword(passValue)
   }
-
-  // localStorage.removeItem('emailProvided')
 
   return (
     <div className={styles.form}>

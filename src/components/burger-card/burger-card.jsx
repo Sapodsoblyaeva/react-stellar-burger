@@ -37,6 +37,7 @@ export default function BurgerCard({ data, openPopup }) {
           onClick={() => {
             openPopup()
             dispatch(getIngredientCard(data))
+            localStorage.setItem('ingredient', JSON.stringify(data))
           }}
           ref={dragRef}
         >

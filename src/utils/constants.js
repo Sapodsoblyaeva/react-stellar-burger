@@ -69,33 +69,36 @@ export const getUser = (authKey) => {
       'Content-Type': 'application/json',
       authorization: authKey,
     },
-  })
-    .then((res) => ({
-      user: res.user,
-    }))
-  }
+  }).then((res) => ({
+    user: res.user,
+  }))
+}
 
 export const fetchWithRefresh = () => {
-  return getUser(localStorage.getItem("accessToken"))
-    .catch((err) => {
-      if (err.message === 'jwt expired') {
-        console.log("error", err.message)
-        refreshToken()
+  return getUser(localStorage.getItem('accessToken')).catch((err) => {
+    if (err.message === 'jwt expired') {
+      console.log('error', err.message)
+      refreshToken()
         .then((res) => {
           if (!res.sucesss) {
-            console.log("error in the middle", res.success)
+            console.log('error in the middle', res.success)
             return Promise.reject(res)
           }
-          console.log("successresult", res)
+          console.log('successresult', res)
           localStorage.setItem('refreshToken', res.refreshToken)
           localStorage.setItem('accessToken', res.accessToken)
           return getUser(res.accessToken)
         })
-      } else {
-        console.log("errorintheend", Promise.reject(err))
-        return Promise.reject(err)
-      }
-    })
+        .catch(
+          (err) => console.log('error in status', err),
+          localStorage.removeItem('accessToken'),
+          localStorage.removeItem('refreshToken')
+        )
+    } else {
+      console.log('errorintheend', Promise.reject(err))
+      return Promise.reject(err)
+    }
+  })
 }
 
 export const loginUser = (emailValue, passValue) => {

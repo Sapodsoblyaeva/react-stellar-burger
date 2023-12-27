@@ -47,3 +47,9 @@
 .profile__description {
   margin-top: 80px;
 }
+
+.profile__buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

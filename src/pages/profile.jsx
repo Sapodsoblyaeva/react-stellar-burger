@@ -1,20 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
 import {
+  Button,
   EmailInput,
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './profile.module.css'
 import { NavLink } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { getUserFromServer, logout } from '../services/registration/action'
-import { userCredentials } from '../services/registration/selector'
 import { changeUser } from '../utils/constants'
 
 export const Profile = () => {
+  const initialState = sessionStorage.getItem('pass')
   const [inputValue, setInputValue] = useState('')
   const [emailValue, setEmailValue] = useState('')
-  const [passValue, setPassValue] = useState('')
+  const [passValue, setPassValue] = useState(initialState)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -23,10 +24,13 @@ export const Profile = () => {
     setEmailValue(localStorage.getItem('email'))
   }, [])
 
+  const [iconClicked, setIconClicked] = useState(false)
+
   const inputRef = useRef(null)
+
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0)
-    alert('Icon Click Callback')
+    setIconClicked(true)
   }
 
   const onClick = (e) => {
@@ -37,7 +41,27 @@ export const Profile = () => {
   const onNameChange = (e) => {
     e.preventDefault()
     setInputValue(e.target.value)
-    changeUser({ nameValue: e.target.value })
+  }
+
+  const onPassChange = (e) => {
+    e.preventDefault()
+    setIconClicked(true)
+    setPassValue(e.target.value)
+  }
+
+  const onSaveClicked = (e) => {
+    e.preventDefault()
+    changeUser({ nameValue: inputValue, passwordValue: passValue }).then(() => {
+      localStorage.setItem('name', inputValue)
+      setIconClicked(false)
+    })
+  }
+
+  const onCancelClick = (e) => {
+    e.preventDefault()
+    setInputValue(localStorage.getItem('name'))
+    setPassValue(initialState)
+    setIconClicked(false)
   }
 
   return (
@@ -114,14 +138,35 @@ export const Profile = () => {
           name={'email'}
           placeholder='E-mail'
           isIcon={false}
-          icon={'EditIcon'}
         />
         <PasswordInput
-          onChange={(e) => setPassValue(e.target.value)}
+          onChange={onPassChange}
           value={passValue}
           name={'password'}
           icon='EditIcon'
+          // ref={inputRef}
+          // onIconClick={onIconClick}
         />
+        {iconClicked && (
+          <div className={styles.profile__buttons}>
+            <Button
+              htmlType='button'
+              type='primary'
+              size='medium'
+              onClick={onSaveClicked}
+            >
+              Сохранить
+            </Button>
+            <Button
+              htmlType='button'
+              type='primary'
+              size='medium'
+              onClick={onCancelClick}
+            >
+              Отменить
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )

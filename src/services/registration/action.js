@@ -39,6 +39,7 @@ export const login = (email, pass) => (dispatch) => {
     localStorage.setItem('refreshToken', res.refreshToken)
     localStorage.setItem('name', res.user.name)
     localStorage.setItem('email', res.user.email)
+    sessionStorage.setItem('pass', pass)
     dispatch(setUser(res.user))
     dispatch(setAuthChecked(true))
   })
@@ -51,8 +52,8 @@ export const checkUserAuth = () => (dispatch) => {
     dispatch(getUserFromServer())
     fetchWithRefresh()
       .catch(() => {
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('refreshToken')
+        // localStorage.removeItem('accessToken')
+        // localStorage.removeItem('refreshToken')
         dispatch(setUser(null))
       })
       .finally(() => dispatch(setAuthChecked(true)))
@@ -67,6 +68,7 @@ export const logout = () => (dispatch) => {
     localStorage.removeItem('refreshToken')
     localStorage.removeItem('name')
     localStorage.removeItem('email')
+    sessionStorage.removeItem('pass')
     dispatch(setUser(null))
   })
 }

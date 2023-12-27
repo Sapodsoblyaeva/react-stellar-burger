@@ -6,7 +6,7 @@ export default function IngredientsDetails() {
   // const { card } = useSelector(ingredient)
 
   //иначе при контрл в на отдельную страницу он выдает ошибку так как не знает откуда брать данные для карточки
-  const card = JSON.parse(localStorage.getItem('ingredients'))
+  const card = JSON.parse(localStorage.getItem('ingredient'))
 
   return (
     <div className={styles.ingredients}>

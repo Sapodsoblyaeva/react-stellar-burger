@@ -30,10 +30,6 @@ function App() {
     dispatch(checkUserAuth())
   }, [])
 
-  if (location.state !== null) {
-    localStorage.setItem('ingredients', JSON.stringify(location.state.card))
-  }
-
   return (
     <div className={styles.app}>
       <Header />
