@@ -32,7 +32,6 @@ export const Home = () => {
     setElements(elements.filter((el) => el.id !== item.id))
   }
 
-
   return (
     <>
       <main className={styles.homepage}>

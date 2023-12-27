@@ -1,6 +1,5 @@
 import {
   fetchWithRefresh,
-  getUser,
   loginUser,
   logoutUser,
   registerUser,
@@ -52,7 +51,7 @@ export const checkUserAuth = () => (dispatch) => {
     dispatch(getUserFromServer())
     fetchWithRefresh()
       .catch(() => {
-       localStorage.removeItem('accessToken')
+        localStorage.removeItem('accessToken')
         localStorage.removeItem('refreshToken')
         dispatch(setUser(null))
       })

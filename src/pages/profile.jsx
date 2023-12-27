@@ -7,13 +7,9 @@ import {
 import styles from './profile.module.css'
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  getUserFromServer,
-  logout,
-} from '../services/registration/action'
+import { getUserFromServer, logout } from '../services/registration/action'
 import { userCredentials } from '../services/registration/selector'
 import { changeUser } from '../utils/constants'
-
 
 export const Profile = () => {
   const [inputValue, setInputValue] = useState('')
@@ -21,16 +17,11 @@ export const Profile = () => {
   const [passValue, setPassValue] = useState('')
   const dispatch = useDispatch()
 
-
   useEffect(() => {
     dispatch(getUserFromServer())
-    setInputValue(localStorage.getItem("name"))
-    setEmailValue(localStorage.getItem("email"))
+    setInputValue(localStorage.getItem('name'))
+    setEmailValue(localStorage.getItem('email'))
   }, [])
-
-  const { user } = useSelector(userCredentials)
-
-  console.log(user)
 
   const inputRef = useRef(null)
   const onIconClick = () => {
@@ -46,7 +37,7 @@ export const Profile = () => {
   const onNameChange = (e) => {
     e.preventDefault()
     setInputValue(e.target.value)
-    changeUser({nameValue: e.target.value})
+    changeUser({ nameValue: e.target.value })
   }
 
   return (

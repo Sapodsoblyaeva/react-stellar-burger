@@ -39,20 +39,6 @@ function App() {
       <Header />
       <Routes location={background || location}>
         <Route path='/' element={<Home />} />
-
-        {/* <Route path='/login' element={<Login />} />
-        <Route
-          path='/register'
-          element={<Register />}
-        />
-        <Route
-          path='/forgot-password'
-          element={<ForgotPassword />}
-        />
-        <Route path='/reset-password' element={<NewPassword />} />
-        <Route path='/ingredients/:id' element={<IngredientPage />} />
-        <Route path='/profile' element={<Profile />} /> */}
-
         <Route path='/login' element={<OnlyUnAuth component={<Login />} />} />
         <Route
           path='/register'
@@ -62,8 +48,14 @@ function App() {
           path='/forgot-password'
           element={<OnlyUnAuth component={<ForgotPassword />} />}
         />
-        <Route path='/reset-password' element={<OnlyUnAuth component={<NewPassword />} />} />
-        <Route path='/ingredients/:id' element={<OnlyAuth component={<IngredientPage />} />} />
+        <Route
+          path='/reset-password'
+          element={<OnlyUnAuth component={<NewPassword />} />}
+        />
+        <Route
+          path='/ingredients/:id'
+          element={<OnlyAuth component={<IngredientPage />} />}
+        />
         <Route path='/profile' element={<OnlyAuth component={<Profile />} />} />
         <Route path='*' element={<Page404 />} />
       </Routes>
@@ -71,10 +63,14 @@ function App() {
         <Routes>
           <Route
             path='/ingredients/:id'
-            element={<OnlyAuth component=
-         {     <Modal closePopup={handleModalClose}>
-                <IngredientPage />
-              </Modal>}/>
+            element={
+              <OnlyAuth
+                component={
+                  <Modal closePopup={handleModalClose}>
+                    <IngredientPage />
+                  </Modal>
+                }
+              />
             }
           />
         </Routes>

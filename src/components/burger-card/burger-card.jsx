@@ -25,52 +25,52 @@ export default function BurgerCard({ data, openPopup }) {
   const id = data._id
 
   return (
-    <Link     
+    <Link
       key={id}
       to={`/ingredients/${id}`}
       state={{ background: location, card: data }}
-      className={`${styles.link} ${"text text_type_digits-default"}`}
+      className={`${styles.link} ${'text text_type_digits-default'}`}
     >
-    <div className={styles.burgercard__subtitleSnacks}>
-      <div
-        className={styles.burgercard}
-        onClick={() => {
-          openPopup()
-          dispatch(getIngredientCard(data))
-        }}
-        ref={dragRef}
-      >
-        {
-          <Counter
-            count={
-              orderedIngredients.filter(
-                (ingredientId) => ingredientId === data._id
-              ).length
-            }
-            size='default'
-            extraClass='m-1'
-            className={styles.burgercard__counter}
-          />
-        }
-        <img
-          className={styles.burgercard__image}
-          src={data.image}
-          alt={data.name}
-        ></img>
-        <div className={styles.burgercard__priceBlock}>
-          <p className='text text_type_digits-default'>{data.price}</p>
-          <CurrencyIcon type='primary' />
-        </div>
-        <p
-          className={`${'text text_type_main-default'} ${
-            styles.burgercard__name
-          }`}
+      <div className={styles.burgercard__subtitleSnacks}>
+        <div
+          className={styles.burgercard}
+          onClick={() => {
+            openPopup()
+            dispatch(getIngredientCard(data))
+          }}
+          ref={dragRef}
         >
-          {data.name}
-        </p>
+          {
+            <Counter
+              count={
+                orderedIngredients.filter(
+                  (ingredientId) => ingredientId === data._id
+                ).length
+              }
+              size='default'
+              extraClass='m-1'
+              className={styles.burgercard__counter}
+            />
+          }
+          <img
+            className={styles.burgercard__image}
+            src={data.image}
+            alt={data.name}
+          ></img>
+          <div className={styles.burgercard__priceBlock}>
+            <p className='text text_type_digits-default'>{data.price}</p>
+            <CurrencyIcon type='primary' />
+          </div>
+          <p
+            className={`${'text text_type_main-default'} ${
+              styles.burgercard__name
+            }`}
+          >
+            {data.name}
+          </p>
+        </div>
       </div>
-    </div>
-</Link>
+    </Link>
   )
 }
 

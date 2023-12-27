@@ -1,8 +1,8 @@
-import { SET_AUTH_CHECKED, SET_USER, SET_AUTH_LOADING } from './action'
+import { SET_AUTH_CHECKED, SET_USER } from './action'
 
 const initialState = {
   user: null,
-  isAuthChecked: false
+  isAuthChecked: false,
 }
 
 export const reducer = (state = initialState, action) => {
@@ -12,11 +12,11 @@ export const reducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       }
-      case SET_AUTH_CHECKED:
-        return {
-          ...state,
-          isAuthChecked: action.payload,
-        }
+    case SET_AUTH_CHECKED:
+      return {
+        ...state,
+        isAuthChecked: action.payload,
+      }
     default:
       return state
   }

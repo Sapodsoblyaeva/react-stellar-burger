@@ -6,11 +6,12 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './form.module.css'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Title from '../title/title'
 import { useDispatch } from 'react-redux'
 import { login, register } from '../../services/registration/action'
 import { resetPassword, successResetPassword } from '../../utils/constants'
+import PropTypes from 'prop-types'
 
 export const Form = (props) => {
   const [inputValue, setInputValue] = useState('')
@@ -39,25 +40,27 @@ export const Form = (props) => {
   const onLoginClick = (e) => {
     e.preventDefault()
     dispatch(login(emailValue, passValue))
-    navigate('/')
   }
 
   const onRegisterClick = (e) => {
     e.preventDefault()
     dispatch(register(emailValue, passValue, inputValue))
-    navigate('/register')
   }
 
   const onForgetClick = (e) => {
     e.preventDefault()
-    resetPassword(emailValue)
-    navigate('/reset-password')
+    resetPassword(emailValue).then((res) => {
+      localStorage.setItem('emailProvided', res.success)
+      navigate('/reset-password')
+    })
   }
 
   const onResetClick = (e) => {
     e.preventDefault()
     successResetPassword(passValue)
   }
+
+  // localStorage.removeItem('emailProvided')
 
   return (
     <div className={styles.form}>
@@ -185,9 +188,6 @@ export const Form = (props) => {
           )
         )}
       </div>
-      {/* <Button htmlType='button' type='primary' size='large'>
-          {props.buttonName}
-        </Button> */}
       {props.title === 'Вход' ? (
         <>
           {' '}
@@ -229,4 +229,8 @@ export const Form = (props) => {
       )}
     </div>
   )
+}
+
+Form.propTypes = {
+  props: PropTypes.string,
 }

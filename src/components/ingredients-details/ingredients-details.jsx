@@ -1,14 +1,12 @@
 import styles from './ingredients-details.module.css'
 import Title from '../title/title'
 import ProductData from '../product-data/product-data'
-import { useSelector } from 'react-redux'
-import { ingredient } from '../../services/ingredient-сard/selectors'
-import { useLocation } from 'react-router-dom'
 
 export default function IngredientsDetails() {
   // const { card } = useSelector(ingredient)
 
-  const card =  JSON.parse(localStorage.getItem("ingredients"))
+  //иначе при контрл в на отдельную страницу он выдает ошибку так как не знает откуда брать данные для карточки
+  const card = JSON.parse(localStorage.getItem('ingredients'))
 
   return (
     <div className={styles.ingredients}>

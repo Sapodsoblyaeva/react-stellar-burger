@@ -1,13 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Navigate, useLocation } from 'react-router-dom'
-import { userId, userAuthChecked } from '../../services/registration/selector'
-import { loadIngredients } from '../../services/ingredients/action'
-import { getUserFromServer } from '../../services/registration/action'
-import { useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { userCredentials } from '../../services/registration/selector'
 
 const Protected = ({ onlyUnAuth = false, component }) => {
-  const user = useSelector((store) => store.user.user)
-  const isAuthChecked = useSelector((store) => store.user.isAuthChecked)
+  const {user} = useSelector(userCredentials)
+  const {isAuthChecked} = useSelector(userCredentials)
   const location = useLocation()
 
   if (!isAuthChecked) {
@@ -24,6 +22,11 @@ const Protected = ({ onlyUnAuth = false, component }) => {
   }
 
   return component
+}
+
+Protected.propTypes = {
+  onlyUnAuth: PropTypes.bool,
+  component: PropTypes.element,
 }
 
 export const OnlyAuth = Protected

@@ -21,7 +21,7 @@ export const addNewOrder = (arr) => {
   return request('orders', {
     method: 'POST',
     headers: {
-      authorization: '08ca101b-72c0-46c7-a5af-c036f69dd465',
+      authorization: localStorage.getItem('accessToken'),
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -40,6 +40,7 @@ export const resetPassword = (value) => {
 }
 
 export const successResetPassword = (value) => {
+  localStorage.removeItem('emailProvided')
   return request('password-reset/reset', {
     method: 'POST',
     body: JSON.stringify({
