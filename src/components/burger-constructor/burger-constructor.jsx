@@ -15,6 +15,7 @@ import {
   deleteIngredient,
   resetConstructor,
 } from '../../services/constructor-ingredients/action'
+import { useNavigate } from 'react-router-dom'
 // import { resetConstructor } from '../../services/constructor-ingredients/action'
 
 export default function BurgerConstructor({ onDropHandler }) {
@@ -27,14 +28,20 @@ export default function BurgerConstructor({ onDropHandler }) {
 
   const dispatch = useDispatch()
 
+  const navigate = useNavigate()
+
   const orderNumberFromApi = () => {
-    let arr = []
-    components.length !== 0 &&
-      components.map((component) => {
-        arr.push(component.item._id)
-      })
-    dispatch(loadOrder(arr))
-    openModal()
+    if (localStorage.getItem('refreshToken')) {
+      let arr = []
+      components.length !== 0 &&
+        components.map((component) => {
+          arr.push(component.item._id)
+        })
+      dispatch(loadOrder(arr))
+      openModal()
+    } else {
+      navigate('/login')
+    }
   }
 
   useEffect(() => {
