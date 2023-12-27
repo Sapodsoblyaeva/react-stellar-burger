@@ -6,9 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getIngredientCard } from '../../services/ingredient-сard/action'
 import { useDrag } from 'react-dnd'
 import { constructorIngredients } from '../../services/constructor-ingredients/selectors'
+import { Link, useLocation } from 'react-router-dom'
 
 export default function BurgerCard({ data, openPopup }) {
   const dispatch = useDispatch()
+  const location = useLocation()
 
   const [, dragRef] = useDrag({
     type: 'ingredients',
@@ -20,7 +22,15 @@ export default function BurgerCard({ data, openPopup }) {
   let orderedIngredients = []
   components.filter((el) => orderedIngredients.push(el.item._id))
 
+  const id = data._id
+
   return (
+    <Link     
+      key={id}
+      to={`/ingredients/${id}`}
+      state={{ background: location, card: data }}
+      className={`${styles.link} ${"text text_type_digits-default"}`}
+    >
     <div className={styles.burgercard__subtitleSnacks}>
       <div
         className={styles.burgercard}
@@ -60,6 +70,7 @@ export default function BurgerCard({ data, openPopup }) {
         </p>
       </div>
     </div>
+</Link>
   )
 }
 

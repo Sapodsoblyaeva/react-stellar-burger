@@ -2,8 +2,6 @@ import styles from './burger-ingredients.module.css'
 import FillMenu from '../fill-menu/fill-menu'
 import Title from '../title/title'
 import FillRenderer from '../fill-renderer/fill-renderer'
-import Modal from '../modal/modal'
-import IngredientsDetails from '../ingredients-details/ingredients-details'
 import { useModal } from '../../hooks/useModal'
 import { useSelector } from 'react-redux'
 import { allIngredients } from '../../services/ingredients/selectors'
@@ -11,7 +9,7 @@ import { useState } from 'react'
 import { ScrollContext } from '../../services/app-context'
 
 export default function BurgerIngredients() {
-  const { isModalOpen, openModal, closeModal } = useModal()
+  const { openModal } = useModal()
   const { ingredients } = useSelector(allIngredients)
 
   const [scrollCoordinate, setScrollCoordinate] = useState(1)
@@ -64,11 +62,6 @@ export default function BurgerIngredients() {
           />
           <FillRenderer data={ingredients} openPopup={openModal} part='main' />
         </div>
-        {isModalOpen && (
-          <Modal closePopup={closeModal}>
-            <IngredientsDetails />
-          </Modal>
-        )}
       </ScrollContext.Provider>
     </section>
   )
