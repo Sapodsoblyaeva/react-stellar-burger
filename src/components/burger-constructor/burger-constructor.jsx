@@ -6,17 +6,11 @@ import Modal from '../modal/modal'
 import OrderDetails from '../order-details/order-details'
 import { useModal } from '../../hooks/useModal'
 import PropTypes from 'prop-types'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { constructorIngredients } from '../../services/constructor-ingredients/selectors'
 import { loadOrder } from '../../services/order-data/action'
-import { order } from '../../services/order-data/selectors'
-import {
-  deleteIngredient,
-  resetConstructor,
-} from '../../services/constructor-ingredients/action'
 import { useNavigate } from 'react-router-dom'
-// import { resetConstructor } from '../../services/constructor-ingredients/action'
 
 export default function BurgerConstructor({ onDropHandler }) {
   const [totalPrice, setTotalPrice] = useState(0)
@@ -39,6 +33,7 @@ export default function BurgerConstructor({ onDropHandler }) {
         })
       dispatch(loadOrder(arr))
       openModal()
+      setButton(true)
     } else {
       navigate('/login')
     }

@@ -4,7 +4,7 @@ import { Logo } from '@ya.praktikum/react-developer-burger-ui-components'
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 export default function Header() {
   return (
@@ -13,14 +13,14 @@ export default function Header() {
         <nav className={styles.header__menu}>
           <div className={`${styles.header__options} ${'pl-5 pr-5 pb-4 pt-4'}`}>
             <BurgerIcon type='primary' />
-            <NavLink
+            <Link
               className={`${
                 styles.header__link
               } ${'text text_type_main-default'}`}
               to='/'
             >
               Конструктор
-            </NavLink>
+            </Link>
           </div>
           <div className={`${styles.header__options} ${'pl-5 pr-5 pb-4 pt-4'}`}>
             <ListIcon type='secondary' />
@@ -34,17 +34,19 @@ export default function Header() {
             </a>
           </div>
         </nav>
-        <Logo />
+        <Link to='/'>
+          <Logo />
+        </Link>
         <div className={`${styles.header__options} ${'pl-5 pr-5 pb-4 pt-4'}`}>
           <ProfileIcon type='secondary' />
-          <NavLink
+          <Link
             className={`${
               styles.header__link
             } ${'text text_type_main-default text_color_inactive'}`}
             to='/profile'
           >
             Личный Кабинет
-          </NavLink>
+          </Link>
         </div>
       </div>
     </header>

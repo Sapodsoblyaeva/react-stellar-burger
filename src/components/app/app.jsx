@@ -9,13 +9,16 @@ import { NewPassword } from '../../pages/new-pass'
 import { IngredientPage } from '../../pages/ingredient'
 import { Page404 } from '../../pages/404'
 import { Profile } from '../../pages/profile'
-import { OnlyAuth, OnlyUnAuth } from './protected-routes'
+import { OnlyAuth, OnlyUnAuth } from '../protected-routes/protected-routes'
 import Modal from '../modal/modal'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { checkUserAuth } from '../../services/registration/action'
 import { useEffect } from 'react'
+import { loadIngredients } from '../../services/ingredients/action'
+import { allIngredients } from '../../services/ingredients/selectors'
 
 function App() {
+  const dispatch = useDispatch()
   const location = useLocation()
   const navigate = useNavigate()
   const background = location.state && location.state.background
@@ -24,11 +27,20 @@ function App() {
     navigate(-1)
   }
 
-  const dispatch = useDispatch()
-
   useEffect(() => {
+    dispatch(loadIngredients())
     dispatch(checkUserAuth())
   }, [])
+
+  const { loading, error } = useSelector(allIngredients)
+
+  if (loading) {
+    return <h2>Loading..</h2>
+  }
+
+  if (!loading && error) {
+    return <h2>Something's gone wrong...</h2>
+  }
 
   return (
     <div className={styles.app}>
@@ -48,10 +60,7 @@ function App() {
           path='/reset-password'
           element={<OnlyUnAuth component={<NewPassword />} />}
         />
-        <Route
-          path='/ingredients/:id'
-          element={<OnlyAuth component={<IngredientPage />} />}
-        />
+        <Route path='/ingredients/:id' element={<IngredientPage />} />
         <Route path='/profile' element={<OnlyAuth component={<Profile />} />} />
         <Route path='*' element={<Page404 />} />
       </Routes>
@@ -60,13 +69,9 @@ function App() {
           <Route
             path='/ingredients/:id'
             element={
-              <OnlyAuth
-                component={
-                  <Modal closePopup={handleModalClose}>
-                    <IngredientPage />
-                  </Modal>
-                }
-              />
+              <Modal closePopup={handleModalClose}>
+                <IngredientPage />
+              </Modal>
             }
           />
         </Routes>

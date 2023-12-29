@@ -10,7 +10,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import Title from '../title/title'
 import { useDispatch } from 'react-redux'
 import { login, register } from '../../services/registration/action'
-import { resetPassword, successResetPassword } from '../../utils/constants'
+import { resetPassword, successResetPassword } from '../../utils/api'
 import PropTypes from 'prop-types'
 
 export const Form = (props) => {
@@ -65,37 +65,82 @@ export const Form = (props) => {
       <div className={styles.form__container}>
         <Title type='h2' title={props.title} />
         {props.title === 'Вход' ? (
-          <>
-            <div className={styles.form__input}>
-              <EmailInput
-                onChange={onEmailChange}
-                value={emailValue}
-                name={'email'}
-                placeholder='E-mail'
-                isIcon={false}
-                extraClass='mb-2'
-              />
-              <PasswordInput
-                value={passValue}
-                name={'password'}
-                onChange={onPassChange}
-              />
-            </div>
-            <Button
-              htmlType='button'
-              type='primary'
-              size='medium'
-              onClick={onLoginClick}
-            >
+          <form className={styles.form__input} onSubmit={onLoginClick}>
+            <EmailInput
+              onChange={onEmailChange}
+              value={emailValue}
+              name={'email'}
+              placeholder='E-mail'
+              isIcon={false}
+              extraClass='mb-2'
+            />
+            <PasswordInput
+              value={passValue}
+              name={'password'}
+              onChange={onPassChange}
+            />
+            <Button htmlType='submit' type='primary' size='medium'>
               Войти
             </Button>
-          </>
+          </form>
         ) : props.title === 'Регистрация' ? (
-          <>
-            <div className={styles.form__input}>
+          <form className={styles.form__input} onSubmit={onRegisterClick}>
+            <Input
+              type={'text'}
+              placeholder={'Имя'}
+              onChange={(e) => setInputValue(e.target.value)}
+              value={inputValue}
+              name={'name'}
+              error={false}
+              ref={inputRef}
+              onIconClick={onIconClick}
+              errorText={'Ошибка'}
+              size={'default'}
+              extraClass='ml-1'
+            />
+            <EmailInput
+              onChange={onEmailChange}
+              value={emailValue}
+              name={'email'}
+              placeholder='E-mail'
+              isIcon={false}
+              extraClass='mb-2'
+            />
+            <PasswordInput
+              onChange={onPassChange}
+              value={passValue}
+              name={'password'}
+            />
+            <Button htmlType='submit' type='primary' size='large'>
+              Зарегистрироваться
+            </Button>
+          </form>
+        ) : props.title === 'Восстановление пароля' &&
+          props.buttonName === 'Восстановить' ? (
+          <form className={styles.form__input} onSubmit={onForgetClick}>
+            <EmailInput
+              onChange={onEmailChange}
+              value={emailValue}
+              name={'email'}
+              placeholder='Укажите E-mail'
+              isIcon={false}
+              extraClass='mb-2'
+            />
+            <Button htmlType='submit' type='primary' size='large'>
+              {props.buttonName}
+            </Button>
+          </form>
+        ) : (
+          props.title === 'Восстановление пароля' && (
+            <form className={styles.form__input} onSubmit={onResetClick}>
+              <PasswordInput
+                onChange={onPassChange}
+                value={passValue}
+                name={'password'}
+              />
               <Input
                 type={'text'}
-                placeholder={'Имя'}
+                placeholder={'Введите код из письма'}
                 onChange={(e) => setInputValue(e.target.value)}
                 value={inputValue}
                 name={'name'}
@@ -106,83 +151,10 @@ export const Form = (props) => {
                 size={'default'}
                 extraClass='ml-1'
               />
-              <EmailInput
-                onChange={onEmailChange}
-                value={emailValue}
-                name={'email'}
-                placeholder='E-mail'
-                isIcon={false}
-                extraClass='mb-2'
-              />
-              <PasswordInput
-                onChange={onPassChange}
-                value={passValue}
-                name={'password'}
-              />
-            </div>
-            <Button
-              htmlType='button'
-              type='primary'
-              size='large'
-              onClick={onRegisterClick}
-            >
-              Зарегистрироваться
-            </Button>
-          </>
-        ) : props.title === 'Восстановление пароля' &&
-          props.buttonName === 'Восстановить' ? (
-          <>
-            <div className={styles.form__input}>
-              <EmailInput
-                onChange={onEmailChange}
-                value={emailValue}
-                name={'email'}
-                placeholder='Укажите E-mail'
-                isIcon={false}
-                extraClass='mb-2'
-              />
-            </div>
-            <Button
-              htmlType='button'
-              type='primary'
-              size='large'
-              onClick={onForgetClick}
-            >
-              {props.buttonName}
-            </Button>
-          </>
-        ) : (
-          props.title === 'Восстановление пароля' && (
-            <>
-              <div className={styles.form__input}>
-                <PasswordInput
-                  onChange={onPassChange}
-                  value={passValue}
-                  name={'password'}
-                />
-                <Input
-                  type={'text'}
-                  placeholder={'Введите код из письма'}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  value={inputValue}
-                  name={'name'}
-                  error={false}
-                  ref={inputRef}
-                  onIconClick={onIconClick}
-                  errorText={'Ошибка'}
-                  size={'default'}
-                  extraClass='ml-1'
-                />
-              </div>
-              <Button
-                htmlType='button'
-                type='primary'
-                size='large'
-                onClick={onResetClick}
-              >
+              <Button htmlType='submit' type='primary' size='large'>
                 Сохранить
               </Button>
-            </>
+            </form>
           )
         )}
       </div>
@@ -211,7 +183,7 @@ export const Form = (props) => {
           </p>{' '}
         </>
       ) : (
-        <>
+        <div>
           {' '}
           <p
             className={`${
@@ -223,7 +195,7 @@ export const Form = (props) => {
               Войти
             </NavLink>
           </p>
-        </>
+        </div>
       )}
     </div>
   )

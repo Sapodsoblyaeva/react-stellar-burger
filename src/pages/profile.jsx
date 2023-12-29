@@ -9,7 +9,7 @@ import styles from './profile.module.css'
 import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { getUserFromServer, logout } from '../services/registration/action'
-import { changeUser } from '../utils/constants'
+import { changeUser } from '../utils/api'
 
 export const Profile = () => {
   const initialState = sessionStorage.getItem('pass')
@@ -117,7 +117,7 @@ export const Profile = () => {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>
-      <div className={styles.profile__input}>
+      <form className={styles.profile__input} onSubmit={onSaveClicked}>
         <Input
           type={'text'}
           placeholder={'Имя'}
@@ -144,17 +144,10 @@ export const Profile = () => {
           value={passValue}
           name={'password'}
           icon='EditIcon'
-          // ref={inputRef}
-          // onIconClick={onIconClick}
         />
         {iconClicked && (
           <div className={styles.profile__buttons}>
-            <Button
-              htmlType='button'
-              type='primary'
-              size='medium'
-              onClick={onSaveClicked}
-            >
+            <Button htmlType='submit' type='primary' size='medium'>
               Сохранить
             </Button>
             <Button
@@ -167,7 +160,7 @@ export const Profile = () => {
             </Button>
           </div>
         )}
-      </div>
+      </form>
     </div>
   )
 }

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { userCredentials } from '../../services/registration/selector'
 
 const Protected = ({ onlyUnAuth = false, component }) => {
-  const {user} = useSelector(userCredentials)
-  const {isAuthChecked} = useSelector(userCredentials)
+  const { user } = useSelector(userCredentials)
+  const { isAuthChecked } = useSelector(userCredentials)
   const location = useLocation()
 
   if (!isAuthChecked) {

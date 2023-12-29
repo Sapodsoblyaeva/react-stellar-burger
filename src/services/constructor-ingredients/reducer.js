@@ -3,6 +3,7 @@ import {
   BURGER_INGREDIENTS_DELETE,
   BURGER_ADD_BUN,
   BURGER_ADD_CARD,
+  BURGER_INGREDIENTS_RESET,
 } from './action'
 
 const initialState = {
@@ -36,6 +37,8 @@ export const reducer = (state = initialState, action) => {
           (component) => component.key !== action.payload
         ),
       }
+    case BURGER_INGREDIENTS_RESET:
+      return initialState
     default:
       return state
   }

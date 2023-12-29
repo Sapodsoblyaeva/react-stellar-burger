@@ -4,6 +4,7 @@ export const BURGER_INGREDIENTS_ADD = 'BURGER_INGREDIENTS_ADD'
 export const BURGER_INGREDIENTS_DELETE = 'BURGER_INGREDIENTS_DELETE'
 export const BURGER_ADD_BUN = 'BURGER_ADD_BUN'
 export const BURGER_ADD_CARD = 'BURGER_ADD_CARD'
+export const BURGER_INGREDIENTS_RESET = 'BURGER_INGREDIENTS_RESET'
 
 export const addIngredient = (item) => ({
   type: BURGER_INGREDIENTS_ADD,
@@ -24,4 +25,8 @@ export const createCardNewPlace = (item, hoverIndex) => ({
   type: BURGER_ADD_CARD,
   payload: { item, key: uuidv1() },
   hover: hoverIndex,
+})
+
+export const resetIngredients = () => ({
+  type: BURGER_INGREDIENTS_RESET,
 })
