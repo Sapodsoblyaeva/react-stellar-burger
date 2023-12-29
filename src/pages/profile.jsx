@@ -55,6 +55,7 @@ export const Profile = () => {
       localStorage.setItem('name', inputValue)
       setIconClicked(false)
     })
+    .catch((err) => console.log(err))
   }
 
   const onCancelClick = (e) => {

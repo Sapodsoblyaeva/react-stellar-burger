@@ -53,11 +53,13 @@ export const Form = (props) => {
       localStorage.setItem('emailProvided', res.success)
       navigate('/reset-password')
     })
+    .catch((err) => console.log(err))
   }
 
   const onResetClick = (e) => {
     e.preventDefault()
     successResetPassword(passValue)
+    .catch((err) => console.log(err))
   }
 
   return (

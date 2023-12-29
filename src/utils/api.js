@@ -22,7 +22,7 @@ export const addNewOrder = (arr) => {
     body: JSON.stringify({
       ingredients: arr,
     }),
-  }).catch((err) => console.log(err))
+  })
 }
 
 export const resetPassword = (value) => {
@@ -31,7 +31,7 @@ export const resetPassword = (value) => {
     body: {
       email: value,
     },
-  }).catch((err) => console.log(err))
+  })
 }
 
 export const successResetPassword = (value) => {
@@ -42,7 +42,7 @@ export const successResetPassword = (value) => {
       password: value,
       token: '',
     }),
-  }).catch((err) => console.log(err))
+  })
 }
 
 export const refreshToken = () => {
@@ -55,7 +55,6 @@ export const refreshToken = () => {
       token: localStorage.getItem('refreshToken'),
     }),
   })
-  //без catch так как кетч идет дальше в коде в функции fetchwithrefresh, иначе там кетч не отрабатывает
 }
 
 export const getUser = (authKey) => {
@@ -68,7 +67,6 @@ export const getUser = (authKey) => {
   }).then((res) => ({
     user: res.user,
   }))
-  //без catch так как кетч идет дальше в коде в функции fetchwithrefresh, иначе там кетч не отрабатывает
 }
 
 export const fetchWithRefresh = () => {
@@ -114,7 +112,6 @@ export const loginUser = (emailValue, passValue) => {
       refreshToken: res.refreshToken,
       user: res.user,
     }))
-    .catch((err) => console.log(err))
 }
 
 export const registerUser = (emailValue, passwordValue, usernameValue) => {
@@ -134,7 +131,6 @@ export const registerUser = (emailValue, passwordValue, usernameValue) => {
       refreshToken: res.refreshToken,
       user: res.user,
     }))
-    .catch((err) => console.log(err))
 }
 
 export const logoutUser = () => {
@@ -146,7 +142,7 @@ export const logoutUser = () => {
     body: JSON.stringify({
       token: localStorage.getItem('refreshToken'),
     }),
-  }).catch((err) => console.log(err))
+  })
 }
 
 export const changeUser = ({ nameValue, passwordValue }) => {
@@ -160,5 +156,5 @@ export const changeUser = ({ nameValue, passwordValue }) => {
       name: nameValue,
       password: passwordValue,
     }),
-  }).catch((err) => console.log(err))
+  })
 }
