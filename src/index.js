@@ -5,14 +5,17 @@ import reportWebVitals from './reportWebVitals'
 import { root } from './utils/constants'
 import { configureStore } from './services/store'
 import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
 
 const store = configureStore()
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>
 )
 

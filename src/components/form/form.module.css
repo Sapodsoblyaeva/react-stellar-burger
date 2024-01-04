@@ -1,0 +1,41 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto 0;
+  max-width: 480px;
+  width: 100%;
+}
+
+.form__input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 24px 0;
+  gap: 24px;
+}
+
+.form__register {
+  margin-top: 80px;
+}
+
+.form__forgotpass {
+  margin-top: 16px;
+}
+
+.form__accentlink {
+  color: #4c4cff;
+  text-decoration: none;
+}
