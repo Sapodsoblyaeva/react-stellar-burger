@@ -16,6 +16,9 @@ import { checkUserAuth } from '../../services/registration/action'
 import { useEffect } from 'react'
 import { loadIngredients } from '../../services/ingredients/action'
 import { allIngredients } from '../../services/ingredients/selectors'
+import { Feed } from '../../pages/feed'
+import { OrderPage } from '../../pages/order-page'
+import { History } from '../../pages/history'
 
 function App() {
   const dispatch = useDispatch()
@@ -61,7 +64,15 @@ function App() {
           element={<OnlyUnAuth component={<NewPassword />} />}
         />
         <Route path='/ingredients/:id' element={<IngredientPage />} />
-        <Route path='/profile' element={<OnlyAuth component={<Profile />} />} />
+        <Route path='/feed/:id' element={<OrderPage />} />
+        <Route path='/feed' element={<Feed />} />
+        <Route path='/profile' element={<OnlyAuth component={<Profile />} />}>
+          <Route path='/profile/orders' element={<History />} />
+        </Route>
+        <Route
+          path='/profile/orders/:id'
+          element={<OnlyAuth component={<OrderPage />} />}
+        />
         <Route path='*' element={<Page404 />} />
       </Routes>
       {background && (
@@ -71,6 +82,24 @@ function App() {
             element={
               <Modal closePopup={handleModalClose}>
                 <IngredientPage />
+              </Modal>
+            }
+          />
+
+          <Route
+            path='/feed/:id'
+            element={
+              <Modal closePopup={handleModalClose}>
+                <OrderPage />
+              </Modal>
+            }
+          />
+
+          <Route
+            path='/profile/orders/:id'
+            element={
+              <Modal closePopup={handleModalClose}>
+                <OrderPage />
               </Modal>
             }
           />

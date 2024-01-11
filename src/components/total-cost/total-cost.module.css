@@ -1,0 +1,14 @@
+.total__cost {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 8px;
+  max-width: 192px;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.total__priceIcon {
+  width: 24px;
+  height: 24px;
+}

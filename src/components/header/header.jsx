@@ -24,14 +24,14 @@ export default function Header() {
           </div>
           <div className={`${styles.header__options} ${'pl-5 pr-5 pb-4 pt-4'}`}>
             <ListIcon type='secondary' />
-            <a
+            <Link
               className={`${
                 styles.header__link
               } ${'text text_type_main-default text_color_inactive'}`}
-              href='#'
+              to="/feed"
             >
               Лента Заказов
-            </a>
+            </Link>
           </div>
         </nav>
         <Link to='/'>

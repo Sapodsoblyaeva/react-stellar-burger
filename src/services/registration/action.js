@@ -23,7 +23,7 @@ export const getUserFromServer = () => (dispatch) => {
     .then((res) => {
       dispatch(setUser(res.user))
     })
-    .catch((err) => console.log(err))
+    .catch((err) => console.log('error in action', err))
 }
 
 export const register = (email, pass, name) => (dispatch) => {

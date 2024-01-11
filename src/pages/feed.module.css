@@ -1,0 +1,16 @@
+.feed {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.feed__container {
+  display: grid;
+  grid-template-columns: repeat(2, 600px);
+  column-gap: 60px;
+}
+
+.feed__title {
+  text-align: start;
+  padding: 16px;
+}

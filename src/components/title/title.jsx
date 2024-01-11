@@ -13,13 +13,19 @@ function Title(props) {
         {props.title}
       </h2>
     )
-  } else if (props.type === 'h2_digits') {
+  } else if (props.type === 'h3') {
     return (
-      <h2 className={`${'text text_type_digits-large'} ${props.style}`}>
+      <h3 className={`${'text text_type_main-small'} ${props.style}`}>
         {props.title}
-      </h2>
+      </h3>
     )
-  }
+  } else if (props.type === 'h4') {
+    return (
+      <p className={`${'text text_type_main-default'} ${props.style}`}>
+        {props.title}
+      </p>
+    )
+  } 
 }
 
 export default Title

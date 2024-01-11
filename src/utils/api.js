@@ -75,14 +75,14 @@ export const fetchWithRefresh = () => {
       console.log('jwt expired', err.message)
       refreshToken()
         .then((res) => {
-          if (!res.sucesss) {
-            console.log('res unsuccessfull', !res.success)
-            return Promise.reject(res)
+          if (res.success) {
+            console.log('successresult from refreshtoken', res)
+            localStorage.setItem('refreshToken', res.refreshToken)
+            localStorage.setItem('accessToken', res.accessToken)
+            return getUser(res.accessToken)
           }
-          console.log('successresult', res)
-          localStorage.setItem('refreshToken', res.refreshToken)
-          localStorage.setItem('accessToken', res.accessToken)
-          return getUser(res.accessToken)
+          console.log('res unsuccessfull from refreshToken', !res.success)
+          return Promise.reject(res)
         })
         .catch(
           (err) => console.log('refreshToken error', err),
@@ -106,12 +106,11 @@ export const loginUser = (emailValue, passValue) => {
       email: emailValue,
       password: passValue,
     }),
-  })
-    .then((res) => ({
-      accessToken: res.accessToken,
-      refreshToken: res.refreshToken,
-      user: res.user,
-    }))
+  }).then((res) => ({
+    accessToken: res.accessToken,
+    refreshToken: res.refreshToken,
+    user: res.user,
+  }))
 }
 
 export const registerUser = (emailValue, passwordValue, usernameValue) => {
@@ -125,12 +124,11 @@ export const registerUser = (emailValue, passwordValue, usernameValue) => {
       password: passwordValue,
       name: usernameValue,
     }),
-  })
-    .then((res) => ({
-      accessToken: res.accessToken,
-      refreshToken: res.refreshToken,
-      user: res.user,
-    }))
+  }).then((res) => ({
+    accessToken: res.accessToken,
+    refreshToken: res.refreshToken,
+    user: res.user,
+  }))
 }
 
 export const logoutUser = () => {
@@ -157,4 +155,8 @@ export const changeUser = ({ nameValue, passwordValue }) => {
       password: passwordValue,
     }),
   })
+}
+
+export const getOrder = (number) => {
+  return request(`orders/${number}`)
 }
