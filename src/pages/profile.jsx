@@ -13,7 +13,7 @@ import { changeUser } from '../utils/api'
 import { ProfileMenu } from '../components/profile-menu/profile-menu'
 
 export const Profile = () => {
-  const initialState = sessionStorage.getItem('pass')
+  const initialState = sessionStorage.getItem('pass') === null ? "******" : sessionStorage.getItem('pass')
   const [inputValue, setInputValue] = useState('')
   const [emailValue, setEmailValue] = useState('')
   const [passValue, setPassValue] = useState(initialState)
