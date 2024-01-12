@@ -8,7 +8,7 @@ import {
 const initialState = {
   orderNumber: 0,
   orderFromServer: [],
-  loading: false,
+  loading: true,
 }
 
 export const reducer = (state = initialState, action) => {
@@ -24,7 +24,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         orderFromServer: action.payload,
-        loading: true,
+        loading: false,
       }
     }
     case ORDER_PROGRESS: {

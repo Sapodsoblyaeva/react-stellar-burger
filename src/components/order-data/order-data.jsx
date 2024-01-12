@@ -11,10 +11,9 @@ import { allIngredients } from '../../services/ingredients/selectors'
 import { TotalCost } from '../total-cost/total-cost'
 import { BriefOrderView } from '../brief-order-view/brief-order-view'
 import { findOrder } from '../../services/order-data/action'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export const OrderData = () => {
-
   const orderId = useParams().id
 
   const dispatch = useDispatch()
@@ -23,31 +22,43 @@ export const OrderData = () => {
     let order = store.feed.orders.find(
       (item) => item.number === parseInt(orderId)
     )
-    if (order) {
+
+    if (order !== undefined) {
       return order
     }
 
     order = store.profileOrder.ordersProfile.find(
       (item) => item.number === parseInt(orderId)
     )
-    if (order) {
+
+    if (order !== undefined) {
       return order
     }
 
     return store.orderNumber.orderFromServer
   })
 
-  useEffect(() => {
-    if (!order) {
-      dispatch(findOrder(parseInt(orderId)))
-    }
-  }, [])
-
   const { ordersLoading } = useSelector(feedSelector)
-
   const { ingredients } = useSelector(allIngredients)
 
-  if (ordersLoading !== true) {
+  const [state, setState] = useState(false)
+
+  const { loading } = useSelector((store) => store.orderNumber)
+
+  useEffect(() => {
+    if (order) {
+      dispatch(findOrder(parseInt(orderId)))
+      if (!loading) {
+        setState(true)
+      }
+    }
+  }, [dispatch])
+
+  if (ordersLoading === true) {
+    return <h2>Loading...</h2>
+  }
+
+  if (state !== true && loading) {
     return <h2>Loading...</h2>
   }
 

@@ -6,13 +6,11 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './profile.module.css'
-import { NavLink, Outlet, useLocation, useParams } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { getUserFromServer, logout } from '../services/registration/action'
+import { getUserFromServer } from '../services/registration/action'
 import { changeUser } from '../utils/api'
 import { ProfileMenu } from '../components/profile-menu/profile-menu'
-import { wsUrlProfile } from '../utils/constants'
-import { connect } from '../services/profile-orders/action'
 
 export const Profile = () => {
   const initialState = sessionStorage.getItem('pass')
@@ -25,7 +23,7 @@ export const Profile = () => {
     dispatch(getUserFromServer())
     setInputValue(localStorage.getItem('name'))
     setEmailValue(localStorage.getItem('email'))
-  }, [])
+  }, [dispatch])
 
   const [iconClicked, setIconClicked] = useState(false)
 
@@ -34,11 +32,6 @@ export const Profile = () => {
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0)
     setIconClicked(true)
-  }
-
-  const onClick = (e) => {
-    e.preventDefault()
-    dispatch(logout())
   }
 
   const onNameChange = (e) => {

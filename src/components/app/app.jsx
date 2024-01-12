@@ -19,6 +19,8 @@ import { allIngredients } from '../../services/ingredients/selectors'
 import { Feed } from '../../pages/feed'
 import { OrderPage } from '../../pages/order-page'
 import { History } from '../../pages/history'
+import { wsUrlFeed } from '../../utils/constants'
+import { connect as connectFeed } from '../../services/feed/action'
 
 function App() {
   const dispatch = useDispatch()
@@ -33,6 +35,7 @@ function App() {
   useEffect(() => {
     dispatch(loadIngredients())
     dispatch(checkUserAuth())
+    dispatch(connectFeed(wsUrlFeed))
   }, [])
 
   const { loading, error } = useSelector(allIngredients)

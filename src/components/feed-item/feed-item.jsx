@@ -9,7 +9,6 @@ import { BriefOrderView } from '../brief-order-view/brief-order-view'
 import PropTypes from 'prop-types'
 
 export const FeedItem = ({ data }) => {
-
   const dateFromServer = data.createdAt
   const location = useLocation()
 
@@ -29,7 +28,7 @@ export const FeedItem = ({ data }) => {
   const uniqueVisibleIngredients = Array.from(visibleSet).slice(0, 5)
 
   const contentVisible = uniqueVisibleIngredients.map((ingredient, index) => (
-    <BriefOrderView data={ingredient} index={index} key={index}/>
+    <BriefOrderView data={ingredient} index={index} key={index} />
   ))
 
   const uniqueInVisibleIngredients = Array.from(visibleSet).slice(5, 6)
@@ -39,7 +38,12 @@ export const FeedItem = ({ data }) => {
 
   const restOfTheContent = uniqueInVisibleIngredients.map(
     (ingredient, index) => (
-      <BriefOrderView data={ingredient} key={index} type="feedItem" qnty={invisibleIngredientsQnty}/>
+      <BriefOrderView
+        data={ingredient}
+        key={index}
+        type='feedItem'
+        qnty={invisibleIngredientsQnty}
+      />
     )
   )
 
@@ -61,6 +65,23 @@ export const FeedItem = ({ data }) => {
           />
         </div>
         <Title title={data.name} type='h2' />
+        {location.pathname === '/profile/orders' && (
+          <Title
+            title={
+              data.status === 'done'
+                ? 'Выполнен'
+                : data.status === 'pending'
+                ? 'Отменен'
+                : 'Готовится'
+            }
+            type='h4'
+            style={
+              data.status === 'created'
+                ? styles.feedItem__caption_active
+                : styles.feedItem__caption
+            }
+          />
+        )}
         <div className={styles.feedItem__briefOrder}>
           <div className={styles.feedItem__images}>
             {contentVisible}

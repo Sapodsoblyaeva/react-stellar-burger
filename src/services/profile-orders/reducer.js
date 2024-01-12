@@ -21,20 +21,18 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         status: WebsocketStatus.CONNECTING,
-        ordersLoading: false,
+        ordersLoading: true,
       }
     case PROFILE_ORDERS_WS_OPEN:
       return {
         ...state,
         status: WebsocketStatus.ONLINE,
         connectingError: '',
-        ordersLoading: false,
       }
     case PROFILE_ORDERS_WS_CLOSE:
       return {
         ...state,
         status: WebsocketStatus.OFFLINE,
-        ordersLoading: false,
       }
     case PROFILE_ORDERS_WS_ERROR:
       return {
@@ -47,7 +45,7 @@ export const reducer = (state = initialState, action) => {
         ...state,
         ordersProfile: action.payload.orders,
         ordersQnty: action.payload,
-        ordersLoading: true,
+        ordersLoading: false,
       }
     default:
       return state

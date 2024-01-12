@@ -39,6 +39,8 @@ export const ProfileMenu = () => {
     }`
   }
 
+  const descriptionText = location.pathname === "/profile" ? "В этом разделе вы можете изменить свои персональные данные" : "В этом разделе вы можете просмотреть свою историю заказов"
+
   return (
     <div className={styles.profileMenu}>
       <NavLink to='/profile' className={profileClass}>
@@ -67,7 +69,7 @@ export const ProfileMenu = () => {
           styles.profileMenu__link
         }${'text text_type_main-small text_color_inactive'}`}
       >
-        В этом разделе вы можете изменить свои персональные данные
+        {descriptionText}
       </p>
     </div>
   )
