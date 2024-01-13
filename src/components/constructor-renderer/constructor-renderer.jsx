@@ -2,7 +2,7 @@ import styles from './constructor-renderer.module.css'
 import MenuItem from '../menu-item/menu-item'
 import { useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { constructorIngredients } from '../../services/constructor-ingredients/selectors'
+import { constructorIngredients } from '../../services/constructor-ingredients/selector'
 import { useDrop } from 'react-dnd'
 import {
   addBun,

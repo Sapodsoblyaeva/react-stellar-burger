@@ -3,7 +3,7 @@ import styles from './feed-item.module.css'
 import Title from '../title/title'
 import { Link, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { allIngredients } from '../../services/ingredients/selectors'
+import { allIngredients } from '../../services/ingredients/selector'
 import { TotalCost } from '../total-cost/total-cost'
 import { BriefOrderView } from '../brief-order-view/brief-order-view'
 import PropTypes from 'prop-types'
@@ -16,13 +16,9 @@ export const FeedItem = ({ data }) => {
 
   const { ingredients } = useSelector(allIngredients)
 
-  const orderIngredients = data.ingredients
-    .map(
-      (ingredient) =>
-        ingredient !== null &&
-        ingredients.find((item) => item._id === ingredient)
-    )
-    .filter((item) => item !== false)
+  const orderIngredients = ingredients.filter((ingredient) =>
+    data.ingredients.find((item) => item !== null && item === ingredient._id)
+  )
 
   const visibleSet = new Set(orderIngredients)
   const uniqueVisibleIngredients = Array.from(visibleSet).slice(0, 5)

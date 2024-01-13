@@ -4,7 +4,7 @@ import Title from '../title/title'
 import FillRenderer from '../fill-renderer/fill-renderer'
 import { useModal } from '../../hooks/useModal'
 import { useSelector } from 'react-redux'
-import { allIngredients } from '../../services/ingredients/selectors'
+import { allIngredients } from '../../services/ingredients/selector'
 import { useState } from 'react'
 import { ScrollContext } from '../../services/app-context'
 

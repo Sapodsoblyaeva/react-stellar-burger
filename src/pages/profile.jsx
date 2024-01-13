@@ -8,19 +8,17 @@ import {
 import styles from './profile.module.css'
 import { Outlet, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { getUserFromServer } from '../services/registration/action'
 import { changeUser } from '../utils/api'
 import { ProfileMenu } from '../components/profile-menu/profile-menu'
 
 export const Profile = () => {
-  const initialState = sessionStorage.getItem('pass') === null ? "******" : sessionStorage.getItem('pass')
+  const initialState = '******'
   const [inputValue, setInputValue] = useState('')
   const [emailValue, setEmailValue] = useState('')
   const [passValue, setPassValue] = useState(initialState)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getUserFromServer())
     setInputValue(localStorage.getItem('name'))
     setEmailValue(localStorage.getItem('email'))
   }, [dispatch])

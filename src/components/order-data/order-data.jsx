@@ -7,36 +7,19 @@ import {
 import { feedSelector } from '../../services/feed/selector'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { allIngredients } from '../../services/ingredients/selectors'
+import { allIngredients } from '../../services/ingredients/selector'
 import { TotalCost } from '../total-cost/total-cost'
 import { BriefOrderView } from '../brief-order-view/brief-order-view'
 import { findOrder } from '../../services/order-data/action'
 import { useEffect, useState } from 'react'
+import { orderSearchSelector } from '../../services/selector'
 
 export const OrderData = () => {
   const orderId = useParams().id
 
   const dispatch = useDispatch()
 
-  const order = useSelector((store) => {
-    let order = store.feed.orders.find(
-      (item) => item.number === parseInt(orderId)
-    )
-
-    if (order !== undefined) {
-      return order
-    }
-
-    order = store.profileOrder.ordersProfile.find(
-      (item) => item.number === parseInt(orderId)
-    )
-
-    if (order !== undefined) {
-      return order
-    }
-
-    return store.orderNumber.orderFromServer
-  })
+  const order = useSelector(orderSearchSelector(parseInt(orderId)))
 
   const { ordersLoading } = useSelector(feedSelector)
   const { ingredients } = useSelector(allIngredients)
@@ -73,11 +56,7 @@ export const OrderData = () => {
   )
 
   let arr = []
-  orderIngredients
-    .filter((item) => item !== false)
-    .map((ingredient) => {
-      arr.push(ingredient._id)
-    })
+  orderIngredients.filter((item) => item !== false && arr.push(item._id))
 
   const ingredientsIds = arr.reduce((accumulator, currentValue) => {
     if (accumulator.hasOwnProperty(currentValue)) {

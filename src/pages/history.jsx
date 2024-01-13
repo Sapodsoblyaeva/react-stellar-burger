@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { FeedBlock } from '../components/feed-block/feed-block'
 import { useDispatch, useSelector } from 'react-redux'
-import { connect } from '../services/profile-orders/action'
-import { wsUrlProfile } from '../utils/constants'
+import { connect, disconnect } from '../services/profile-orders/action'
+import { WS_URL_PROFILE, wsUrlProfile } from '../utils/constants'
 import { profilesOrderSelector } from '../services/profile-orders/selector'
 
 export const History = () => {
-
   const dispatch = useDispatch()
+
   const accessToken = localStorage
     .getItem('accessToken')
     .split(' ')
@@ -15,7 +15,11 @@ export const History = () => {
     .join()
 
   useEffect(() => {
-    dispatch(connect(`${wsUrlProfile}?token=${accessToken}`))
+    dispatch(connect(`${WS_URL_PROFILE}?token=${accessToken}`))
+
+    return () => {
+      dispatch(disconnect())
+    }
   }, [dispatch, accessToken])
 
   const { ordersProfile } = useSelector(profilesOrderSelector)

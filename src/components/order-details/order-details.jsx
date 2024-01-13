@@ -1,6 +1,6 @@
 import styles from './order-details.module.css'
-import done from '../../images/done.png'
-import { order } from '../../services/order-data/selectors'
+import done from '../../images/done.svg'
+import { order } from '../../services/order-data/selector'
 import { useSelector } from 'react-redux'
 
 export default function OrderDetails() {
@@ -16,7 +16,9 @@ export default function OrderDetails() {
 
   return (
     <div className={styles.order}>
-      <p className={`${styles.order__title} ${"text text_type_digits-large"}`}>{orderNumber}</p>
+      <p className={`${styles.order__title} ${'text text_type_digits-large'}`}>
+        {orderNumber}
+      </p>
       <p className='text text_type_main-large'>идентификатор заказа</p>
       <img
         className={styles.order__image}

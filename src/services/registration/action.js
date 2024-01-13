@@ -22,8 +22,12 @@ export const getUserFromServer = () => (dispatch) => {
   return fetchWithRefresh()
     .then((res) => {
       dispatch(setUser(res.user))
+      dispatch(setAuthChecked(true))
     })
-    .catch((err) => console.log('error in action', err))
+    .catch(() => {
+      dispatch(setUser(null))
+    })
+    .finally(() => dispatch(setAuthChecked(true)))
 }
 
 export const register = (email, pass, name) => (dispatch) => {
@@ -44,7 +48,6 @@ export const login = (email, pass) => (dispatch) => {
       localStorage.setItem('refreshToken', res.refreshToken)
       localStorage.setItem('name', res.user.name)
       localStorage.setItem('email', res.user.email)
-      sessionStorage.setItem('pass', pass)
       dispatch(setUser(res.user))
       dispatch(setAuthChecked(true))
     })
@@ -53,15 +56,6 @@ export const login = (email, pass) => (dispatch) => {
 
 export const checkUserAuth = () => (dispatch) => {
   if (localStorage.getItem('accessToken')) {
-    //если без диспатч, то каждыц раз просит логин (так как в хранилище пользователь не сохраняется)
-    //а если без fetchWithRequest постоянно вылетает ошибка с catch(видимо getUserFromServer undefined возвращает)
-    fetchWithRefresh()
-      .catch(() => {
-        // localStorage.removeItem('accessToken')
-        // localStorage.removeItem('refreshToken')
-        dispatch(setUser(null))
-      })
-      .finally(() => dispatch(setAuthChecked(true)))
     dispatch(getUserFromServer())
   } else {
     dispatch(setAuthChecked(true))
@@ -75,7 +69,6 @@ export const logout = () => (dispatch) => {
       localStorage.removeItem('refreshToken')
       localStorage.removeItem('name')
       localStorage.removeItem('email')
-      sessionStorage.removeItem('pass')
       dispatch(setUser(null))
     })
     .catch((err) => console.log(err))

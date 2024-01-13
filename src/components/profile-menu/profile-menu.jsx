@@ -13,53 +13,37 @@ export const ProfileMenu = () => {
 
   const location = useLocation()
 
-  let profileClass
-  let orderClass
+  const activeLink = `${'text text_type_main-medium'} ${
+    styles.profileMenu__link_active
+  }`
 
-  if (location.pathname === '/profile') {
-    profileClass = `${'text text_type_main-medium'} ${
-      styles.profileMenu__link_active
-    }`
-    orderClass = `${'text text_type_main-medium text_color_inactive'} ${
-      styles.profileMenu__link
-    }`
-  } else if (location.pathname === '/profile/orders') {
-    orderClass = `${'text text_type_main-medium '} ${
-      styles.profileMenu__link_active
-    }`
-    profileClass = `${'text text_type_main-medium text_color_inactive'} ${
-      styles.profileMenu__link
-    }`
-  } else {
-    orderClass = `${'text text_type_main-medium text_color_inactive'} ${
-      styles.profileMenu__link
-    }`
-    profileClass = `${'text text_type_main-medium text_color_inactive'} ${
-      styles.profileMenu__link
-    }`
-  }
+  const inActiveLink = `${'text text_type_main-medium text_color_inactive'} ${
+    styles.profileMenu__link
+  }`
 
-  const descriptionText = location.pathname === "/profile" ? "В этом разделе вы можете изменить свои персональные данные" : "В этом разделе вы можете просмотреть свою историю заказов"
+  const descriptionText =
+    location.pathname === '/profile'
+      ? 'В этом разделе вы можете изменить свои персональные данные'
+      : 'В этом разделе вы можете просмотреть свою историю заказов'
 
   return (
     <div className={styles.profileMenu}>
-      <NavLink to='/profile' className={profileClass}>
+      <NavLink
+        to='/profile'
+        end
+        className={({ isActive }) => (isActive ? activeLink : inActiveLink)}
+      >
         Профиль
       </NavLink>
-      <NavLink to='/profile/orders' className={orderClass}>
+      <NavLink
+        to='/profile/orders'
+        className={({ isActive }) => (isActive ? activeLink : inActiveLink)}
+      >
         История Заказов
       </NavLink>
       <NavLink
         to='/login'
-        className={({ isActive }) =>
-          isActive
-            ? `${'text text_type_main-medium'} ${
-                styles.profileMenu__link_active
-              }`
-            : `${'text text_type_main-medium text_color_inactive'} ${
-                styles.profileMenu__link
-              }`
-        }
+        className={({ isActive }) => (isActive ? activeLink : inActiveLink)}
         onClick={onClick}
       >
         Выход
