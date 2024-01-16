@@ -55,8 +55,13 @@ export const OrderData = () => {
     orderIngredients.filter((item) => item !== false)
   )
 
-  let arr = []
-  orderIngredients.filter((item) => item !== false && arr.push(item._id))
+  const arr = orderIngredients.reduce((acc, item) => {
+    if (item) {
+      acc.push(item._id)
+    }
+
+    return acc
+  }, [])
 
   const ingredientsIds = arr.reduce((accumulator, currentValue) => {
     if (accumulator.hasOwnProperty(currentValue)) {
