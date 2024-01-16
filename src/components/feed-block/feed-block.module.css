@@ -1,0 +1,11 @@
+.feedBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 812px;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 0px 0px 40px 8px;
+  max-width: 844px;
+  width: 100%;
+}

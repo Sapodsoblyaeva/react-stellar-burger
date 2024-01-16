@@ -1,0 +1,28 @@
+.profileMenu {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+  width: 100%;
+  padding-left: 20px;
+  /* position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%); */
+}
+
+.profileMenu__link {
+  display: inline-block;
+  padding: 20px 0;
+  text-decoration: none;
+}
+
+.profileMenu__link_active {
+  display: inline-block;
+  padding: 20px 0;
+  text-decoration: none;
+  color: white;
+}
+
+.profileMenu__description {
+  margin-top: 80px;
+}

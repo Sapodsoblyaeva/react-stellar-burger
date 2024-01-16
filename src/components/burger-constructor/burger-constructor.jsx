@@ -8,7 +8,7 @@ import { useModal } from '../../hooks/useModal'
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { constructorIngredients } from '../../services/constructor-ingredients/selectors'
+import { constructorIngredients } from '../../services/constructor-ingredients/selector'
 import { loadOrder } from '../../services/order-data/action'
 import { useNavigate } from 'react-router-dom'
 
@@ -27,10 +27,17 @@ export default function BurgerConstructor({ onDropHandler }) {
   const orderNumberFromApi = () => {
     if (localStorage.getItem('refreshToken')) {
       let arr = []
+      let bunComponent = ''
       components.length !== 0 &&
         components.map((component) => {
-          arr.push(component.item._id)
+          if (component.item.type !== 'bun') {
+            arr.push(component.item._id)
+          } else if (component.item.type === 'bun') {
+            arr.unshift(component.item._id)
+            bunComponent = component.item._id
+          }
         })
+      arr.push(bunComponent)
       dispatch(loadOrder(arr))
       openModal()
       setButton(true)

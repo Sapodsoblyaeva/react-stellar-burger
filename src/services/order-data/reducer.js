@@ -1,7 +1,14 @@
-import { ORDER_ERROR, ORDER_PROGRESS, ORDER_SUCCESS } from './action'
+import {
+  ORDER_ERROR,
+  ORDER_PROGRESS,
+  ORDER_SEARCH_SUCCESS,
+  ORDER_SUCCESS,
+} from './action'
 
 const initialState = {
   orderNumber: 0,
+  orderFromServer: [],
+  loading: true,
 }
 
 export const reducer = (state = initialState, action) => {
@@ -10,7 +17,13 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         orderNumber: action.payload,
-        order: action.order,
+        loading: false,
+      }
+    }
+    case ORDER_SEARCH_SUCCESS: {
+      return {
+        ...state,
+        orderFromServer: action.payload,
         loading: false,
       }
     }

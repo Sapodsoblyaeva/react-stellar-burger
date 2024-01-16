@@ -8,11 +8,11 @@ import {
   deleteIngredient,
 } from '../../services/constructor-ingredients/action'
 import { useDrag, useDrop } from 'react-dnd'
-import { hover } from '@testing-library/user-event/dist/hover'
 import { useRef } from 'react'
-import { constructorIngredients } from '../../services/constructor-ingredients/selectors'
+import { constructorIngredients } from '../../services/constructor-ingredients/selector'
 
 function MenuItem(props) {
+  
   const { components } = useSelector(constructorIngredients)
   const dispatch = useDispatch()
   const ref = useRef(null)

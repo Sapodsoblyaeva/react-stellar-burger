@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { getIngredientCard } from '../../services/ingredient-сard/action'
 import { useDrag } from 'react-dnd'
-import { constructorIngredients } from '../../services/constructor-ingredients/selectors'
+import { constructorIngredients } from '../../services/constructor-ingredients/selector'
 import { Link, useLocation } from 'react-router-dom'
 
 export default function BurgerCard({ data, openPopup }) {
