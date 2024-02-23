@@ -20,18 +20,18 @@ export const socketMiddleware = (wsActions) => {
         wsDisconnect,
       } = wsActions
 
-      if (type === wsConnect) {
+      if (type === wsConnect.type) {
         socket = new WebSocket(action.payload)
-        dispatch({ type: wsConnecting })
+        dispatch(wsConnecting())
       }
 
       if (socket) {
         socket.onopen = () => {
-          dispatch({ type: onOpen })
+          dispatch(onOpen())
         }
 
         socket.onerror = () => {
-          dispatch({ type: onError, payload: 'Error' })
+          dispatch(onError('Error'))
         }
 
         socket.onmessage = (event) => {
@@ -39,21 +39,21 @@ export const socketMiddleware = (wsActions) => {
           const parsedData = JSON.parse(data)
           if (data?.message === 'Invalid or missing token') {
             refreshToken().then((res) =>
-              dispatch({ type: wsConnect, payload: url })
+              dispatch(wsConnect(url))
             )
           }
-          dispatch({ type: onMessage, payload: parsedData })
+          dispatch(onMessage(parsedData))
         }
 
         socket.onclose = () => {
           if (closing) {
-            dispatch({ type: onClose })
+            dispatch(onClose())
           } else {
-            dispatch({ type: wsConnect, payload: url })
+            dispatch(wsConnect(url))
           }
         }
 
-        if (type === wsDisconnect) {
+        if (type === wsDisconnect.type) {
           closing = true
           socket.close()
           socket = null

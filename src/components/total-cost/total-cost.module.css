@@ -6,9 +6,5 @@
   max-width: 192px;
   width: 100%;
   justify-content: flex-end;
-}
-
-.total__priceIcon {
-  width: 24px;
-  height: 24px;
+  align-items: center;
 }
