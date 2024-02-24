@@ -1,3 +1,10 @@
+import {
+  Action,
+  ActionCreatorWithPayload,
+  ActionCreatorWithoutPayload,
+} from '@reduxjs/toolkit'
+import { FeedOrdersQnty } from '../services/feed/reducer'
+
 export type ItemID = {
   _id: string
 }
@@ -64,4 +71,16 @@ export type UserResponseFromServer = {
 
 export type ErrorFromApiRequest = {
   message: string
+}
+
+export type Actions = {
+  wsConnect: ActionCreatorWithPayload<string, string>
+  wsDisconnect: ActionCreatorWithoutPayload<string>
+  wsConnecting: ActionCreatorWithoutPayload<string>
+  onOpen: ActionCreatorWithoutPayload<string>
+  onClose: ActionCreatorWithoutPayload<string>
+  onError: ActionCreatorWithPayload<string, string>
+  onMessage:
+    | ActionCreatorWithPayload<ProfileOrdersFromServer, string>
+    | ActionCreatorWithPayload<FeedOrdersQnty, string>
 }

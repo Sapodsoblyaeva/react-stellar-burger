@@ -7,8 +7,6 @@ export type ProtectedRoureProps = {
   component: JSX.Element
 }
 
-export type UnProtectedRouteProps = Omit<ProtectedRoureProps, 'onlyUnAuth'>
-
 const Protected = ({ onlyUnAuth = false, component }: ProtectedRoureProps) => {
   const { user, isAuthChecked } = useAppSelector(userCredentials)
 

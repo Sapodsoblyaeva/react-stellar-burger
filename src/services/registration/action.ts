@@ -5,70 +5,55 @@ import {
   logoutUser,
   registerUser,
 } from '../../utils/api'
-import {
-  setAuthChecked,
-  setUser,
-} from './reducer'
+import { setAuthChecked, setUser } from './reducer'
 import { AppDispatch } from '../../hooks/useDispatch'
-import { UserLogin, UserRegister, UserResponseFromServer } from '../../utils/types'
+import {
+  UserLogin,
+  UserRegister,
+  UserResponseFromServer,
+} from '../../utils/types'
 
 export const login = createAsyncThunk<UserResponseFromServer, UserLogin>(
   'user/login',
   async (data) => {
-    try {
-      const { email, pass } = data
-      const res = await loginUser(email, pass)
-      localStorage.setItem('accessToken', res.accessToken)
-      localStorage.setItem('refreshToken', res.refreshToken)
-      localStorage.setItem('name', res.user.name)
-      localStorage.setItem('email', res.user.email)
-      setAuthChecked(true)
-      return res
-    } catch (err) {
-      console.log('errorInLogin', err)
-      throw err
-    }
+    const { email, pass } = data
+    const res = await loginUser(email, pass)
+    localStorage.setItem('accessToken', res.accessToken)
+    localStorage.setItem('refreshToken', res.refreshToken)
+    localStorage.setItem('name', res.user.name)
+    localStorage.setItem('email', res.user.email)
+    setAuthChecked(true)
+    return res
   }
 )
 
 export const register = createAsyncThunk<UserResponseFromServer, UserRegister>(
   'user/register',
   async (data) => {
-    try {
-      const { email, pass, name } = data
-      const res = await registerUser(email, pass, name)
-      localStorage.setItem('accessToken', res.accessToken)
-      localStorage.setItem('refreshToken', res.refreshToken)
-      setUser(res.user)
-      setAuthChecked(true)
-      return res
-    } catch (err) {
-      throw err
-    }
+    const { email, pass, name } = data
+    const res = await registerUser(email, pass, name)
+    localStorage.setItem('accessToken', res.accessToken)
+    localStorage.setItem('refreshToken', res.refreshToken)
+    setUser(res.user)
+    setAuthChecked(true)
+    return res
   }
 )
 
 export const getUserFromServer = createAsyncThunk<UserResponseFromServer>(
   'user/getUserFromServer',
   async () => {
-    try {
-      const res = await fetchWithRefresh()
-      if (res) {
-        const { user, accessToken, refreshToken } = res
-        setAuthChecked(true)
-        return {
-          user,
-          accessToken,
-          refreshToken,
-        }
-      } else {
-        throw new Error('something went wrong')
-      }
-    } catch (err) {
-      setUser({ name: '', email: '' })
-      throw err
-    } finally {
+    const res = await fetchWithRefresh()
+    if (res) {
+      const { user, accessToken, refreshToken } = res
       setAuthChecked(true)
+      return {
+        user,
+        accessToken,
+        refreshToken,
+      }
+    } else {
+      throw new Error('something went wrong')
     }
   }
 )

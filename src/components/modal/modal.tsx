@@ -10,13 +10,9 @@ type Props = {
   children: ReactNode
 }
 
-type KeyEvent = {
-  key: string
-}
-
 const Modal = ({ closePopup, children }: Props) => {
   useEffect(() => {
-    const closeOnEsc = (e: KeyEvent) => {
+    const closeOnEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         closePopup()
       }

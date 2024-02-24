@@ -4,7 +4,7 @@ import Title from '../title/title'
 import FillRenderer from '../fill-renderer/fill-renderer'
 import { useModal } from '../../hooks/useModal'
 import { allIngredients } from '../../services/ingredients/selector'
-import { useState } from 'react'
+import { UIEvent, useState } from 'react'
 import { ScrollContext } from '../../services/app-context'
 import { useAppSelector } from '../../hooks/useSelector'
 
@@ -14,7 +14,7 @@ const BurgerIngredients = () => {
 
   const [scrollCoordinate, setScrollCoordinate] = useState<string>('one')
 
-  const handleScroll = (e: any) => {
+  const handleScroll = (e: UIEvent<HTMLDivElement> ) => {
     if (e.currentTarget.scrollTop < 288) {
       setScrollCoordinate('one')
     } else if (

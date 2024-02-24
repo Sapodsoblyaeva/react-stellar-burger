@@ -6,8 +6,8 @@ import { allIngredients } from '../../services/ingredients/selector'
 import { TotalCost } from '../total-cost/total-cost'
 import { BriefOrderView } from '../brief-order-view/brief-order-view'
 import { BurgerIngredientsType, OrderFromServerInfo } from '../../utils/types'
-import { ReactNode } from 'react'
 import { useAppSelector } from '../../hooks/useSelector'
+import { IngredientID } from '../order-data/order-data'
 
 type Props = {
   data: OrderFromServerInfo
@@ -22,31 +22,37 @@ export const FeedItem = ({ data }: Props) => {
 
   const { ingredients } = useAppSelector(allIngredients)
 
-  const orderIngredients: Array<BurgerIngredientsType> = ingredients.filter(
-    (item) => data.ingredients.find((i) => i === item._id)
+  let orderIngredients: BurgerIngredientsType[] = []
+
+  let i: BurgerIngredientsType
+
+  data.ingredients.map((x) => {
+    ingredients.map((i) => {
+      if (i._id === x) {
+        return orderIngredients.push(i)
+      }
+      return 0
+    })
+  })
+
+  const visibleSet = new Set(orderIngredients)
+
+  const uniqueVisibleIngredients = Array.from(new Set(orderIngredients)).slice(
+    0,
+    5
   )
 
-  const visibleSet: Set<BurgerIngredientsType> = new Set(orderIngredients)
+  const contentVisible = uniqueVisibleIngredients.map((ingredient, index) => (
+    <BriefOrderView data={ingredient} index={index} key={index} />
+  ))
 
-  const uniqueVisibleIngredients: Array<BurgerIngredientsType> = Array.from(
-    new Set(orderIngredients)
-  ).slice(0, 5)
+  const uniqueInVisibleIngredients = Array.from(visibleSet).slice(5, 6)
 
-  const contentVisible: ReactNode = uniqueVisibleIngredients.map(
-    (ingredient: BurgerIngredientsType, index: number) => (
-      <BriefOrderView data={ingredient} index={index} key={index} />
-    )
-  )
-
-  const uniqueInVisibleIngredients: Array<BurgerIngredientsType> = Array.from(
-    visibleSet
-  ).slice(5, 6)
-
-  const invisibleIngredientsQnty: number =
+  const invisibleIngredientsQnty =
     orderIngredients.length - uniqueVisibleIngredients.length
 
-  const restOfTheContent: ReactNode = uniqueInVisibleIngredients.map(
-    (ingredient: any, index: any) => (
+  const restOfTheContent = uniqueInVisibleIngredients.map(
+    (ingredient, index) => (
       <BriefOrderView
         data={ingredient}
         key={index}

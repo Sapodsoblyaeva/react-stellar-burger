@@ -5,7 +5,7 @@ import {
   FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components'
 import { feedSelector } from '../../services/feed/selector'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { allIngredients } from '../../services/ingredients/selector'
 import { TotalCost } from '../total-cost/total-cost'
 import { BriefOrderView } from '../brief-order-view/brief-order-view'
@@ -18,7 +18,7 @@ import { useAppDispatch } from '../../hooks/useDispatch'
 import { useAppSelector } from '../../hooks/useSelector'
 import { profilesOrderSelector } from '../../services/profile-orders/selector'
 
-type IngredientID = {
+export type IngredientID = {
   [key: string]: number
 }
 
@@ -38,10 +38,6 @@ export const OrderData = () => {
 
   const { profileOrdersLoading } = useAppSelector(profilesOrderSelector)
 
-  console.log('orderFromServer', !loading)
-  console.log('feedloading', !ordersLoading)
-  console.log('profileloading', !profileOrdersLoading)
-
   useEffect(() => {
     if (order) {
       dispatch(findOrder(parseInt(orderNumber)))
@@ -56,11 +52,22 @@ export const OrderData = () => {
 
   const dateFromServer = order.createdAt
 
-  const orderIngredients = ingredients.filter((ingredient) =>
-    order.ingredients.find((item) => item === ingredient._id)
-  )
+  let orderIngredients: BurgerIngredientsType[] = []
+
+  let i: BurgerIngredientsType
+
+  order.ingredients.map((x) => {
+    ingredients.map((i) => {
+      if (i._id === x) {
+        return orderIngredients.push(i)
+      }
+      return 0
+    })
+  })
 
   const uniqueIngredients = Array.from(new Set(orderIngredients))
+
+  console.log(uniqueIngredients)
 
   let arr: Array<string> = []
 

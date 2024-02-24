@@ -3,23 +3,18 @@ import Title from '../title/title'
 import ProductData from '../product-data/product-data'
 import { ingredientCard } from '../../services/ingredient-сard/selector'
 import { allIngredients } from '../../services/ingredients/selector'
-import { useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { BurgerIngredientsType } from '../../utils/types'
 import { useAppSelector } from '../../hooks/useSelector'
 
 const IngredientsDetails = () => {
   const [state, setState] = useState<boolean>(false)
 
-  const location = useLocation()
-
-  const id = location.pathname.split('/').slice(2).join()
+  const id = useParams()
 
   const { ingredients, loading, error } = useAppSelector(allIngredients)
 
-  const itemCard: BurgerIngredientsType = ingredients.find(
-    (item) => item._id === id
-  )!
+  const itemCard = ingredients.find((item) => item._id === id.id)!
 
   useEffect(() => {
     setState(true)

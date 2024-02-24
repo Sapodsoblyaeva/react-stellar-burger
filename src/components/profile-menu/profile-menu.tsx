@@ -1,13 +1,13 @@
 import styles from './profile-menu.module.css'
 import { NavLink, useLocation } from 'react-router-dom'
 import { logout } from '../../services/registration/action'
-import { MouseEvent } from 'react'
+import { MouseEvent, MouseEventHandler } from 'react'
 import { useAppDispatch } from '../../hooks/useDispatch'
 
 export const ProfileMenu = () => {
   const dispatch = useAppDispatch()
 
-  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     dispatch(logout())
   }
@@ -51,7 +51,7 @@ export const ProfileMenu = () => {
         className={({ isActive }): string =>
           isActive ? activeLink : inActiveLink
         }
-        onClick={() => onClick}
+        onClick={onClick}
       >
         Выход
       </NavLink>

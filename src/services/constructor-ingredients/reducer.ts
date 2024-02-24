@@ -45,7 +45,7 @@ const ComponentsSlice = createSlice({
       state.comp = [...state.comp.filter((el) => el.key !== action.payload)]
     },
     burgerIngredientsReset(state) {
-      state.comp = []
+      state.comp = initialState.comp
     },
   },
 })
