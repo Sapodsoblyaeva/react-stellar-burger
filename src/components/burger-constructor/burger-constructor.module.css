@@ -19,8 +19,3 @@
   flex-wrap: nowrap;
   gap: 8px;
 }
-
-.burgerConstructor__priceIcon {
-  width: 36px;
-  height: 36px;
-}
