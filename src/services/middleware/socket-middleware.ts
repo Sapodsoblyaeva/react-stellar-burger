@@ -1,14 +1,16 @@
-import { AnyAction, MiddlewareAPI } from 'redux';
+import { Middleware, MiddlewareAPI } from 'redux';
 import { refreshToken } from '../../utils/api'
 import { Actions } from '../../utils/types';
+import { AppDispatch } from '../../hooks/useDispatch';
+import { AppState } from '../store';
 
-export const socketMiddleware = (wsActions: Actions) => {
-  return (store: MiddlewareAPI) => {
+export const socketMiddleware = (wsActions: Actions): Middleware => {
+  return (store: MiddlewareAPI<AppDispatch, AppState>) => {
     let socket: WebSocket | null = null
     let closing = false
     let url: string
 
-    return (next: (action: AnyAction) => void) => (action: AnyAction) => {
+    return (next) => (action) => {
       url = action.payload
       const { dispatch } = store
       const { type } = action
